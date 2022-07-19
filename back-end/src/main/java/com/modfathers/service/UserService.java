@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.modfathers.exception.UserAlreadyExistException;
 import com.modfathers.model.User;
 import com.modfathers.repository.UserRepository;
 
@@ -23,8 +24,12 @@ public class UserService {
 	}
 	
 	public User registerUser(String userName, String password, String firstName, String lastName, String phone, String email) {
-		User user = new User(0, firstName, lastName, userName, password, email, phone, LocalDate.now());
-		return userRepo.save(user);
-	}
-
+		User u = userRepo.findByEmail(email).orElse(null);
+		if (u == null) {
+			User user = new User(0, firstName, lastName, userName, password, email, phone, LocalDate.now());
+			return userRepo.save(user);
+		} else {
+			throw new UserAlreadyExistException("User already exists with this email");
+		}
+	}	
 }
