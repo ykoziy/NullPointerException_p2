@@ -1,5 +1,7 @@
 package com.modfathers.model;
 
+import java.time.LocalDate;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -47,5 +49,8 @@ public class User {
 	
 	@Length(min = 10, max = 10)
 	@Pattern(regexp = "[0-9]*")
-	private String phone;	
+	private String phone;
+	
+	@Column(name = "reg_date")
+	private LocalDate registrationDate;
 }
