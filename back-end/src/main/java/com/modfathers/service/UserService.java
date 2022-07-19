@@ -1,6 +1,9 @@
 package com.modfathers.service;
 
 import java.time.LocalDate;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,5 +54,19 @@ public class UserService {
 		}
 	}
 	
+	public Set<User> getUsers() {
+		return userRepo.findAll().stream().collect(Collectors.toSet());
+	}
 	
+	public User getByUsername(String username) {
+		return userRepo.findByEmail(username).orElse(new User());
+	}
+	
+	public User getById(int id) {
+		return userRepo.getReferenceById(id);
+	}
+	
+	public User getByEmail(String email) {
+		return userRepo.findByEmail(email).orElse(new User());
+	}
 }
