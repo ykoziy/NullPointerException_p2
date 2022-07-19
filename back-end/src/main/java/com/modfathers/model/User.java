@@ -28,12 +28,15 @@ public class User {
 	private int id;
 	
 	@Length(min=2)
+	@Column(name = "first_name")
 	private String firstName;
 	@Length(min = 2)
+	@Column(name = "last_name")
 	private String lastName;
 	
 	@Length(min = 5)
 	@Pattern(regexp = "[a-zA-Z][a-zA-Z0-9]*")
+	@Column(name = "username")
 	private String userName;
 	
 	@NotBlank
