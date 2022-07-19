@@ -1,13 +1,15 @@
 package com.modfathers.service;
 
 import java.time.LocalDate;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.modfathers.exception.UserAlreadyExistException;
+import com.modfathers.exception.UserAuthenticationException;
 import com.modfathers.model.User;
 import com.modfathers.repository.UserRepository;
 
@@ -17,10 +19,12 @@ public class UserService {
 	private Logger log = LoggerFactory.getLogger(UserService.class);
 	
 	private final UserRepository userRepo;
+	private final PasswordEncoder passwordEncoder;
 	
 	@Autowired
 	public UserService(UserRepository userRepo) {
 		this.userRepo = userRepo;
+		this.passwordEncoder = new BCryptPasswordEncoder();
 	}
 	
 	public User registerUser(String userName, String password, String firstName, String lastName, String phone, String email) {
@@ -31,5 +35,21 @@ public class UserService {
 		} else {
 			throw new UserAlreadyExistException("User already exists with this email");
 		}
-	}	
+	}
+	
+	public User loginUser(String username, String password) {
+		User matchUser = userRepo.findByUserName(username).orElse(null);
+		if (matchUser != null) {
+			boolean isPasswordMatching = passwordEncoder.matches(password, matchUser.getPassword());
+			if(isPasswordMatching) {
+				return matchUser;
+			} else {
+				throw new UserAuthenticationException("Wrong password for username: " + username);
+			}
+		} else {
+			throw new UserAuthenticationException("Can't find user with such username: " + username);
+		}
+	}
+	
+	
 }
