@@ -1,5 +1,7 @@
 package com.modfathers.service;
 
+import java.time.LocalDate;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,11 +15,15 @@ public class UserService {
 	
 	private Logger log = LoggerFactory.getLogger(UserService.class);
 	
+	private final UserRepository userRepo;
+	
 	@Autowired
-	private UserRepository userRepo;
+	public UserService(UserRepository userRepo) {
+		this.userRepo = userRepo;
+	}
 	
 	public User registerUser(String userName, String password, String firstName, String lastName, String phone, String email) {
-		User user = new User(0, firstName, lastName, userName, password, email, phone);
+		User user = new User(0, firstName, lastName, userName, password, email, phone, LocalDate.now());
 		return userRepo.save(user);
 	}
 
