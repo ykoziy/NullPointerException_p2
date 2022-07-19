@@ -38,13 +38,14 @@ public class User {
 	
 	@Length(min = 5)
 	@Pattern(regexp = "[a-zA-Z][a-zA-Z0-9]*")
-	@Column(name = "username")
+	@Column(name = "username", unique=true)
 	private String userName;
 	
 	@NotBlank
 	private String password;
 	
 	@Email
+	@Column(unique=true)
 	private String email;
 	
 	@Length(min = 10, max = 10)

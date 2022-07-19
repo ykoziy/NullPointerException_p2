@@ -15,8 +15,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.modfathers.exception.UserAlreadyExistException;
+import com.modfathers.exception.UserAuthenticationException;
 import com.modfathers.model.User;
 import com.modfathers.repository.UserRepository;
 
@@ -46,9 +48,42 @@ public class UserServiceTest {
 		when(userRepo.save(any(User.class))).thenThrow(new UserAlreadyExistException("User already exists with this email"));
 		Throwable exception =  assertThrows(UserAlreadyExistException.class, () -> {
 			User u = userService.registerUser("testUser", "password", "Bob", "Smith", "4206669999", "bobs@example.com");	
-			System.out.println("hi");
 		});
 		
 		assertEquals("User already exists with this email", exception.getMessage());
+	}
+	
+	@Test 
+	void userCanLogin() {
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		String encoded = encoder.encode("password");
+		User testUser = new User(12, "Bob", "Smith", "testUser", encoded, "bob@example.com", "4206669999", LocalDate.now());
+		when(userRepo.findByUserName(anyString())).thenReturn(Optional.of(testUser));
+		User u = userService.loginUser("testUser", "password");
+		assertEquals(testUser, u);
+	}
+	
+	@Test 
+	void userCantLoginWrongPassword() {
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		String encoded = encoder.encode("password");
+		User testUser = new User(12, "Bob", "Smith", "testUser", encoded, "bob@example.com", "4206669999", LocalDate.now());
+		when(userRepo.findByUserName(anyString())).thenReturn(Optional.of(testUser));
+		Throwable exception =  assertThrows(UserAuthenticationException.class, () -> {
+			User u = userService.loginUser("testUser", "123");
+		});		
+		assertEquals("Wrong password for username: testUser", exception.getMessage());
+	}
+	
+	@Test 
+	void userCantLoginNoSuchUsername() {
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		String encoded = encoder.encode("password");
+		User testUser = new User(12, "Bob", "Smith", "testUser", encoded, "bob@example.com", "4206669999", LocalDate.now());
+		when(userRepo.findByUserName(anyString())).thenReturn(Optional.empty());
+		Throwable exception =  assertThrows(UserAuthenticationException.class, () -> {
+			User u = userService.loginUser("testUser2", "password");
+		});		
+		assertEquals("Can't find user with such username: testUser2", exception.getMessage());		
 	}
 }
