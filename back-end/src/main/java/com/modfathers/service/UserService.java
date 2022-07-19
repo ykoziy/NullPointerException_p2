@@ -59,14 +59,18 @@ public class UserService {
 	}
 	
 	public User getByUsername(String username) {
-		return userRepo.findByEmail(username).orElse(new User());
+		System.out.println(username);
+		return userRepo.findByUserName(username).orElse(null);
 	}
 	
-	public User getById(int id) {
-		return userRepo.getReferenceById(id);
+	public User findById(int id) {
+		if (id <= 0) {
+			return null;
+		}
+		return userRepo.findById(id).orElse(null);
 	}
 	
 	public User getByEmail(String email) {
-		return userRepo.findByEmail(email).orElse(new User());
+		return userRepo.findByEmail(email).orElse(null);
 	}
 }
