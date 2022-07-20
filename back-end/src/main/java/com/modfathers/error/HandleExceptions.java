@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import com.modfathers.exception.DataNotFoundException;
 import com.modfathers.exception.UserAlreadyExistException;
 import com.modfathers.exception.UserAuthenticationException;
 
@@ -23,5 +24,12 @@ public class HandleExceptions {
 	public @ResponseBody ErrorResponse
 	handleException(UserAuthenticationException ex) {
 		return new ErrorResponse(HttpStatus.UNAUTHORIZED.value(), ex.getMessage());
+	}
+	
+	@ExceptionHandler(value = DataNotFoundException.class)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	public @ResponseBody ErrorResponse
+	handleException(DataNotFoundException ex) {
+		return new ErrorResponse(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
 	}
 }
