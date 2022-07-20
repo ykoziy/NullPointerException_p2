@@ -103,4 +103,12 @@ public class UserService {
 		} 
 		return null;
 	}
+	
+	public boolean delete(int id) {
+		if (userRepo.existsById(id)) {
+			userRepo.deleteById(id);
+			return true;
+		}
+		return false;
+	}
 }
