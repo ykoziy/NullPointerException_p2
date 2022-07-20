@@ -59,7 +59,6 @@ public class UserService {
 	}
 	
 	public User getByUsername(String username) {
-		System.out.println(username);
 		return userRepo.findByUserName(username).orElse(null);
 	}
 	
@@ -72,5 +71,44 @@ public class UserService {
 	
 	public User getByEmail(String email) {
 		return userRepo.findByEmail(email).orElse(null);
+	}
+
+	public User updateUser(User user) {
+		User u;
+		User matchUser = userRepo.findById(user.getId()).orElse(null);
+		if (matchUser != null) {
+			if (user.getFirstName() != null) {
+				matchUser.setFirstName(user.getFirstName());	
+			}
+			if (user.getLastName() != null) {
+				matchUser.setLastName(user.getLastName());
+			}		
+			if (user.getPassword() != null) {
+				String encodedPassword = passwordEncoder.encode(user.getPassword());
+				matchUser.setPassword(encodedPassword);			
+			}
+			if (user.getEmail() != null) {
+				if (!user.getEmail().equals(matchUser.getEmail())) {
+					matchUser.setEmail(user.getEmail());
+					u = userRepo.findByEmail(user.getEmail()).orElse(null);
+					if (u != null) {
+						throw new UserAlreadyExistException("User already exists with this email");
+					}
+				}
+			}
+			if (user.getPhone() != null) {
+				matchUser.setPhone(user.getPhone());
+			} 
+			return userRepo.save(matchUser);
+		} 
+		return null;
+	}
+	
+	public boolean delete(int id) {
+		if (userRepo.existsById(id)) {
+			userRepo.deleteById(id);
+			return true;
+		}
+		return false;
 	}
 }

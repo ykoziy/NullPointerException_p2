@@ -7,9 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -73,5 +75,20 @@ public class UserController {
 		} else {
 			return new ResponseEntity<User>(u, HttpStatus.OK);
 		}
+	}
+	
+	@PutMapping("/update")
+	public ResponseEntity<User> updateUser(@RequestBody User user) {
+		User u = userServ.updateUser(user);
+		if (u == null) {
+			return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
+		} else {
+			return new ResponseEntity<User>(u, HttpStatus.OK);
+		}		
+	}
+	
+	@DeleteMapping("/delete/{id}")
+	public boolean deleteUser(@PathVariable("id") int id) {
+		return userServ.delete(id);
 	}
 }
