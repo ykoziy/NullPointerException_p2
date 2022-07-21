@@ -1,6 +1,6 @@
 package com.modfathers.model;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -53,5 +53,5 @@ public class User {
 	private String phone;
 	
 	@Column(name = "reg_date")
-	private LocalDate registrationDate;
+	private LocalDateTime registrationDate;
 }

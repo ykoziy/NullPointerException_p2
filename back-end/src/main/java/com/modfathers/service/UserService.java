@@ -1,6 +1,6 @@
 package com.modfathers.service;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -33,7 +33,7 @@ public class UserService {
 	public User registerUser(String userName, String password, String firstName, String lastName, String phone, String email) {
 		User u = userRepo.findByEmail(email).orElse(null);
 		if (u == null) {
-			User user = new User(0, firstName, lastName, userName, password, email, phone, LocalDate.now());
+			User user = new User(0, firstName, lastName, userName, password, email, phone, LocalDateTime.now());
 			return userRepo.save(user);
 		} else {
 			throw new UserAlreadyExistException("User already exists with this email");
