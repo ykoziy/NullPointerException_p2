@@ -5,22 +5,32 @@ import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.modfathers.exception.DataNotFoundException;
+import com.modfathers.model.Address;
+import com.modfathers.model.CreditCard;
 import com.modfathers.model.Payment;
+import com.modfathers.repository.CreditCardRepository;
 import com.modfathers.repository.PaymentRepository;
 
 @Service
 public class PaymentService {
 	
 	private PaymentRepository payRepo;
+	private CreditCardRepository cardRepo;
 	
 	@Autowired
-	public PaymentService(PaymentRepository payRepo) {
+	public PaymentService(PaymentRepository payRepo, CreditCardRepository cardRepo) {
 		this.payRepo = payRepo;
+		this.cardRepo = cardRepo;
 	}
 
-	public Payment add(Payment payment) {
+	public Payment add(int id, Payment payment) {
 		payment.setTimestamp(LocalDateTime.now());
-		return payRepo.save(payment);
+		Payment pay = cardRepo.findById(id).map(card -> {
+			payment.setCard(card);
+			return payRepo.save(payment); 
+		}).orElseThrow(() -> new DataNotFoundException("Did not credit card with id: " + id));
+		return pay;
 	}
 	
 	public Payment findById(int id) {
