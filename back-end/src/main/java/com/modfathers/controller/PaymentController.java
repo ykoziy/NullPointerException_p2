@@ -23,9 +23,9 @@ public class PaymentController {
 	@Autowired
 	private PaymentService payServ;
 	
-	@PostMapping("/add")
-	public Payment addPayment(@RequestBody Payment payment) {
-		return payServ.add(payment);
+	@PostMapping("/add/{id}")
+	public Payment addPayment(@PathVariable("id") int id, @RequestBody Payment payment) {
+		return payServ.add(id, payment);
 	}
 	
 	@GetMapping("/id")
