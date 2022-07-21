@@ -29,7 +29,7 @@ public class PaymentService {
 		Payment pay = cardRepo.findById(id).map(card -> {
 			payment.setCard(card);
 			return payRepo.save(payment); 
-		}).orElseThrow(() -> new DataNotFoundException("Did not credit card with id: " + id));
+		}).orElseThrow(() -> new DataNotFoundException("Did not find credit card with id: " + id));
 		return pay;
 	}
 	

@@ -1,23 +1,49 @@
 package com.modfathers.service;
 
+import java.util.Collections;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import com.modfathers.exception.DataNotFoundException;
+import com.modfathers.model.Address;
 import com.modfathers.model.CreditCard;
+import com.modfathers.model.User;
 import com.modfathers.repository.CreditCardRepository;
+import com.modfathers.repository.UserRepository;
 
 @Service
 public class CreditCardService {
 
 	private final CreditCardRepository cardRepo;
+	private final UserRepository userRepo;
 
 	@Autowired
-	public CreditCardService(CreditCardRepository cardRepo) {
+	public CreditCardService(CreditCardRepository cardRepo, UserRepository userRepo) {
 		this.cardRepo = cardRepo;
+		this.userRepo = userRepo;
 	}
 
 	public CreditCard add(CreditCard card) {
 		return cardRepo.save(card);
+	}
+	
+	public CreditCard add(int user_id, CreditCard card) {
+		User u = userRepo.findById(user_id).orElse(null);
+		if (u != null) {
+			card.setUser(u);
+			CreditCard newCard = cardRepo.save(card);
+			return cardRepo.save(newCard);
+		} else {
+			throw new DataNotFoundException("Did not find user with id: " + user_id);
+		}
+	}
+	
+	public List<CreditCard> findByUserId(int user_id) {
+		if (user_id <= 0) {
+			return Collections.emptyList();
+		}	
+		return cardRepo.findByUserId(user_id);
 	}
 
 	public CreditCard findById(int id) {
