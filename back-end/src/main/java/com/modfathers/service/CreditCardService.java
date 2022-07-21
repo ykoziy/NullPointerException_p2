@@ -34,15 +34,15 @@ public class CreditCardService {
 				matchCard.setNumber(newCard.getNumber());
 			}
 
-			if (newCard.getType() == null) {
+			if (newCard.getType() != null) {
 				matchCard.setType(newCard.getType());
 			}
 
-			if (newCard.getHolderFirstName() == null) {
+			if (newCard.getHolderFirstName() != null) {
 				matchCard.setHolderFirstName(newCard.getHolderFirstName());
 			}
 
-			if (newCard.getHolderLastName() == null) {
+			if (newCard.getHolderLastName() != null) {
 				matchCard.setHolderLastName(newCard.getHolderLastName());
 			}
 			
