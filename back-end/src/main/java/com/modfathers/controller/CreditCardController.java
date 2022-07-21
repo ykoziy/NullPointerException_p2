@@ -1,5 +1,7 @@
 package com.modfathers.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.modfathers.model.Address;
 import com.modfathers.model.CreditCard;
 import com.modfathers.service.CreditCardService;
 
@@ -26,6 +29,21 @@ public class CreditCardController {
 	@PostMapping("/add")
 	public CreditCard addPayment(@RequestBody CreditCard newCard) {
 		return cardServ.add(newCard);
+	}
+	
+	@PostMapping("/add/{user_id}")
+	public CreditCard addCreditCardForUser(@PathVariable("user_id") int user_id, @RequestBody CreditCard newCard) {
+		return cardServ.add(user_id, newCard);
+	}
+	
+	@GetMapping("/uid")
+	public ResponseEntity<List<CreditCard>> getByUserId(@RequestHeader("id") int id) {
+		List<CreditCard> cardList = cardServ.findByUserId(id);
+		if (cardList.isEmpty()) {
+			return new ResponseEntity<List<CreditCard>>(HttpStatus.NO_CONTENT);
+		} else {
+			return new ResponseEntity<List<CreditCard>>(cardList, HttpStatus.OK);
+		}
 	}
 	
 	@GetMapping("/id")
