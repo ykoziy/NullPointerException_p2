@@ -15,8 +15,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.modfathers.model.Address;
+import com.modfathers.model.User;
 import com.modfathers.repository.AddressRepository;
 import com.modfathers.repository.UserRepository;
 
@@ -33,6 +35,7 @@ public class AddressServiceTest {
 	
 	private Address testAddress;
 	private Address testAddress2;
+	private User testUser;
 	
 	@BeforeEach
 	void beforeEach() {
@@ -43,11 +46,32 @@ public class AddressServiceTest {
 	void cleanUp() {
 		testAddress = null;
 		testAddress2 = null;
+		testUser = null;
 	}
 	
 	@Test
 	void shouldBeAbleToAddAddressForUser() {
-
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		String encoded = encoder.encode("password");
+		testUser = new User();
+		testUser.setId(12);
+		testUser.setFirstName("Bob");
+		testUser.setLastName("Smith");
+		testUser.setUserName("testUser");
+		testUser.setPassword(encoded);
+		testUser.setEmail("bob@example.com");
+		testUser.setPhone("4206669999");
+		testUser.setRegistrationDate(LocalDateTime.now());
+		
+		testAddress = new Address( 1, null, "503 S Humbolt Ave #13", "Ellinwood", "KS", "67526");
+		
+		when(userRepo.findById(12)).thenReturn(Optional.of(testUser));
+		when(addressRepo.save(testAddress)).thenReturn(testAddress);
+		
+		Address test = addressServ.add(12, testAddress);
+		
+		assertEquals(testUser, test.getUser());
+		assertEquals(testAddress.getStreet(), test.getStreet());
 	}
 	
 	@Test
