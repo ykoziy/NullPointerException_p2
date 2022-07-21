@@ -26,11 +26,6 @@ public class CreditCardController {
 	@Autowired
 	private CreditCardService cardServ;
 	
-	@PostMapping("/add")
-	public CreditCard addPayment(@RequestBody CreditCard newCard) {
-		return cardServ.add(newCard);
-	}
-	
 	@PostMapping("/add/{user_id}")
 	public CreditCard addCreditCardForUser(@PathVariable("user_id") int user_id, @RequestBody CreditCard newCard) {
 		return cardServ.add(user_id, newCard);
