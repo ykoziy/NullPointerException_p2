@@ -27,7 +27,7 @@ public class Log {
 	}
 
 	@Around("servicePointcut()")
-	public void aroundLog(ProceedingJoinPoint jp) throws Throwable {
+	public Object aroundLog(ProceedingJoinPoint jp) throws Throwable {
 		String methodName = jp.getSignature().getName();
 		String className = jp.getTarget().getClass().getSimpleName();
 
@@ -57,7 +57,7 @@ public class Log {
 		log.info("Invoking " + className + "." + methodName + "(" + joiner.toString() + ") with arguments: " + joinerB.toString());
 		Object obj = jp.proceed();
 		log.info(className + "." + methodName + "(" + joinerB.toString() + ") returned: " + obj.getClass().getTypeName());
-		// return obj;
+		return obj;
 	}
 
 }
