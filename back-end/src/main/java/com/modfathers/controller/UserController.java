@@ -67,8 +67,8 @@ public class UserController {
 		}
 	}
 	
-	@GetMapping("/id")
-	public ResponseEntity<User> getById(@RequestHeader("id") int id) {
+	@GetMapping("/id/{id}")
+	public ResponseEntity<User> getById(@PathVariable("id") int id) {
 		User u = userServ.findById(id);
 		if (u == null) {
 			return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
