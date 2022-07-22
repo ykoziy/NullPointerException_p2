@@ -23,13 +23,13 @@ public class PaymentController {
 	@Autowired
 	private PaymentService payServ;
 	
-	@PostMapping("/add/{id}")
-	public Payment addPayment(@PathVariable("id") int id, @RequestBody Payment payment) {
-		return payServ.add(id, payment);
+	@PostMapping("/add/{card_id}")
+	public Payment addPayment(@PathVariable("card_id") int cardId, @RequestBody Payment payment) {
+		return payServ.add(cardId, payment);
 	}
 	
-	@GetMapping("/id")
-	public Payment getById(@RequestHeader("id") int id) {
+	@GetMapping("/id/{id}")
+	public Payment getById(@PathVariable("id") int id) {
 		return payServ.findById(id);
 	}
 	

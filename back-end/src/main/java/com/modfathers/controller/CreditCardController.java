@@ -31,8 +31,8 @@ public class CreditCardController {
 		return cardServ.add(user_id, newCard);
 	}
 	
-	@GetMapping("/uid")
-	public ResponseEntity<List<CreditCard>> getByUserId(@RequestHeader("id") int id) {
+	@GetMapping("/uid/{user_id}")
+	public ResponseEntity<List<CreditCard>> getByUserId(@PathVariable("user_id") int id) {
 		List<CreditCard> cardList = cardServ.findByUserId(id);
 		if (cardList.isEmpty()) {
 			return new ResponseEntity<List<CreditCard>>(HttpStatus.NO_CONTENT);
@@ -41,8 +41,8 @@ public class CreditCardController {
 		}
 	}
 	
-	@GetMapping("/id")
-	public ResponseEntity<CreditCard> getById(@RequestHeader("id") int id) {
+	@GetMapping("/id/{id}")
+	public ResponseEntity<CreditCard> getById(@PathVariable("id") int id) {
 		CreditCard card = cardServ.findById(id);
 		if (card == null) {
 			return new ResponseEntity<CreditCard>(HttpStatus.NO_CONTENT);
