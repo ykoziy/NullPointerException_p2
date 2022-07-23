@@ -24,7 +24,7 @@ import com.modfathers.repository.CreditCardRepository;
 import com.modfathers.repository.UserRepository;
 
 @ExtendWith(MockitoExtension.class)
-public class CreditCardTest {
+public class CreditCardServiceTest {
 
 	@Mock
 	private UserRepository userRepo;
