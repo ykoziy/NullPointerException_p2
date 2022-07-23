@@ -4,7 +4,7 @@ version: 0.2
 phases:
   build:
     commands:
-      - mvn clean package
+      - mvn clean package -Ddb_user=${db_user} -Ddb_url=${db_url} -Ddb_pass=${db_pass}
 # represents information about where CodeBuild can find the build output
 artifacts:
   # locations that contain the build output artifacts in the build environment
