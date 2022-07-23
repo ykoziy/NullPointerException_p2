@@ -12,7 +12,4 @@ artifacts:
   # locations that contain the build output artifacts in the build environment
   files:
     - 'Dockerfile'
-    - '*/target/back-end-0.0.1-SNAPSHOT.jar'
-  # represents one or more top-level directories, relative to the original build location
-  # helps CodeBuild find which files and directories to indlude in the build artifact.
-  base-directory: back-end
+    - 'back-end/target/back-end-0.0.1-SNAPSHOT.jar'
