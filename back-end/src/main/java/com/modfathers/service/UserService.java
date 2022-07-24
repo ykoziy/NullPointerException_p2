@@ -33,8 +33,13 @@ public class UserService {
 	public User registerUser(String userName, String password, String firstName, String lastName, String phone, String email) {
 		User u = userRepo.findByEmail(email).orElse(null);
 		if (u == null) {
-			User user = new User(firstName, lastName, userName, password, email, phone, LocalDateTime.now());
-			return userRepo.save(user);
+			u = userRepo.findByUserName(userName).orElse(null);
+			if (u == null) {
+				User user = new User(firstName, lastName, userName, password, email, phone, LocalDateTime.now());
+				return userRepo.save(user);
+			} else {
+				throw new UserAlreadyExistException("User already exists with this username");			
+			}
 		} else {
 			throw new UserAlreadyExistException("User already exists with this email");
 		}

@@ -73,6 +73,24 @@ public class UserServiceTest {
 	}
 
 	@Test
+	void cantRegistreIfUsernameExists() {
+		testUser = new User();
+		testUser.setId(12);
+		testUser.setFirstName("Bob");
+		testUser.setLastName("Smith");
+		testUser.setUserName("testUser");
+		testUser.setPassword("password");
+		testUser.setEmail("bob@example.com");
+		testUser.setPhone("4206669999");
+		testUser.setRegistrationDate(LocalDateTime.now());
+		
+		when(userRepo.findByUserName("testUser")).thenReturn(Optional.of(testUser));
+		assertThrows(UserAlreadyExistException.class, () -> {
+			userService.registerUser("testUser", "password", "Bob", "Smith", "4206669999", "bob@example.com");
+		});
+	}
+	
+	@Test
 	void cantRegistreIfEmailExists() {
 		testUser = new User();
 		testUser.setId(12);
