@@ -1,7 +1,13 @@
 package com.modfathers.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 import java.time.LocalDateTime;
@@ -17,7 +23,9 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import com.modfathers.exception.DataNotFoundException;
 import com.modfathers.model.Address;
+import com.modfathers.model.CreditCard;
 import com.modfathers.model.User;
 import com.modfathers.repository.AddressRepository;
 import com.modfathers.repository.UserRepository;
@@ -75,11 +83,37 @@ public class AddressServiceTest {
 	}
 	
 	@Test
+	void shouldNotAddAddressIfNoUserFound() {
+		testAddress = new Address();
+		when(userRepo.findById(12)).thenReturn(Optional.empty());
+		assertThrows(DataNotFoundException.class, () -> {
+			addressServ.add(12, testAddress);
+		});
+	}
+	
+	@Test
+	void shouldNotDeleteIfNoAddressFound() {
+		assertFalse(addressServ.delete(100));
+	}
+	
+	@Test
+	void shouldDeleteAddress() {
+		when(addressRepo.existsById(100)).thenReturn(true);
+		assertTrue(addressServ.delete(100));
+	}
+	
+	@Test
 	void shouldGetAddressById() {
 		testAddress = new Address( "503 S Humbolt Ave #13", "Ellinwood", "KS", "67526");
 		when(addressRepo.findById(1)).thenReturn(Optional.of(testAddress));
 		Address a = addressServ.findById(1);
 		assertEquals(testAddress, a);
+	}
+	
+	@Test
+	void shouldNotGetAddressForInvalidId() {
+		Address a = addressServ.findById(0);
+		assertNull(a);
 	}
 	
 	@Test
@@ -97,74 +131,40 @@ public class AddressServiceTest {
 	}
 	
 	@Test
-	void shouldNotUpdateUserIfNothingChanges() {
-		testAddress = new Address( "503 S Humbolt Ave #13", "Ellinwood", "KS", "67526");
-		testAddress2 = new Address( "503 S Humbolt Ave #13", "Ellinwood", "KS", "67526");
-		Address newAddress = new Address();
-		newAddress.setId(1);
-		when(addressRepo.findById(1)).thenReturn(Optional.of(testAddress2));
-		addressServ.update(newAddress);
-		assertEquals(testAddress, testAddress2);
+	void shouldReturnEmptyListIfInvalidUserId() {
+		List<Address> resultList = addressServ.findByUserId(0);
+		assertEquals(0, resultList.size());
 	}
 	
 	@Test
-	void shouldOnlyUpdateStreet() {
-		testAddress = new Address( "503 S Humbolt Ave #13", "Ellinwood", "KS", "67526");
-		Address newAddress = new Address();
-		newAddress.setId(1);
-		newAddress.setStreet("100 example st.");
-		when(addressRepo.findById(1)).thenReturn(Optional.of(testAddress));
-		addressServ.update(newAddress);
-		
-		assertEquals("100 example st.", testAddress.getStreet());
-		assertNotNull(testAddress.getCity());
-		assertNotNull(testAddress.getState());
-		assertNotNull(testAddress.getZip());
-		
+	void shouldNotUpdateIfCreditCardNotFound() {
+		testAddress = new Address();
+		testAddress.setId(1);
+		when(addressRepo.findById(1)).thenReturn(Optional.empty());
+		Address a = addressServ.update(testAddress);
+		assertNull(a);
 	}
 	
 	@Test
-	void shouldOnlyUpdateCity() {
-		testAddress = new Address( "503 S Humbolt Ave #13", "Ellinwood", "KS", "67526");
-		Address newAddress = new Address();
-		newAddress.setId(1);
-		newAddress.setCity("new york");
+	void shouldUpdateUser() {
+		testAddress = new Address("503 S Humbolt Ave #13", "Ellinwood", "KS", "67526");
+		testAddress2 = new Address( "598 S Humbolt Ave #13", "Butler", "PA", "12345");
+		testAddress2.setId(1);
 		when(addressRepo.findById(1)).thenReturn(Optional.of(testAddress));
-		addressServ.update(newAddress);
-		
-		assertEquals("new york", testAddress.getCity());
-		assertNotNull(testAddress.getStreet());
-		assertNotNull(testAddress.getState());
-		assertNotNull(testAddress.getZip());	
+		when(addressRepo.save(any(Address.class))).thenReturn(testAddress2);
+		Address result  = addressServ.update(testAddress2);
+		assertNotEquals(testAddress, result);
 	}
 	
 	@Test
-	void shouldOnlyUpdateState() {
-		testAddress = new Address( "503 S Humbolt Ave #13", "Ellinwood", "KS", "67526");
-		Address newAddress = new Address();
-		newAddress.setId(1);
-		newAddress.setState("NY");
-		when(addressRepo.findById(1)).thenReturn(Optional.of(testAddress));
-		addressServ.update(newAddress);
+	void shouldNotUpdateIfNewDataEmpty() {
+		testAddress = new Address("503 S Humbolt Ave #13", "Ellinwood", "KS", "67526");
+
+		testAddress2 = new Address();
+		testAddress2.setId(1);
 		
-		assertEquals("NY", testAddress.getState());
-		assertNotNull(testAddress.getCity());
-		assertNotNull(testAddress.getStreet());
-		assertNotNull(testAddress.getZip());
-	}
-	
-	@Test
-	void shouldOnlyUpdateZip() {
-		testAddress = new Address( "503 S Humbolt Ave #13", "Ellinwood", "KS", "67526");
-		Address newAddress = new Address();
-		newAddress.setId(1);
-		newAddress.setZip("12345");
 		when(addressRepo.findById(1)).thenReturn(Optional.of(testAddress));
-		addressServ.update(newAddress);
-		
-		assertEquals("12345", testAddress.getZip());
-		assertNotNull(testAddress.getCity());
-		assertNotNull(testAddress.getState());
-		assertNotNull(testAddress.getState());
+		addressServ.update(testAddress2);
+		assertEquals("503 S Humbolt Ave #13", testAddress.getStreet());		
 	}
 }
