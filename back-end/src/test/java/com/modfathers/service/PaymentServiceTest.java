@@ -1,7 +1,10 @@
 package com.modfathers.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
 import java.time.LocalDateTime;
@@ -14,6 +17,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import com.modfathers.exception.DataNotFoundException;
+import com.modfathers.model.Address;
 import com.modfathers.model.CreditCard;
 import com.modfathers.model.Payment;
 import com.modfathers.repository.CreditCardRepository;
@@ -48,6 +53,13 @@ public class PaymentServiceTest {
 		testPayment2 = null;
 	}
 	
+	@Test
+	void shouldNotAddPaymentIfNoCreditCardFound() {
+		testPayment = new Payment();
+		assertThrows(DataNotFoundException.class, () -> {
+			payServ.add(12, testPayment);
+		});
+	}
 	
 	@Test
 	void shouldBeAbleToAddPaymentForCreditCard() {
@@ -87,6 +99,54 @@ public class PaymentServiceTest {
 		when(payRepo.findById(1)).thenReturn(Optional.of(testPayment));
 		Payment newPayment = payServ.findById(1);
 		assertEquals(testCard, newPayment.getCard());
+	}
+	
+	@Test
+	void shouldNotGetPaymentByInvalidId() {
+		assertNull(payServ.findById(0));
+	}
+	
+	@Test
+	void shouldNotDeleteIfPaymentNotFound() {
+		assertFalse(payServ.delete(100));
+	}
+	
+	@Test
+	void shouldDeleteIfPaymentFound() {
+		testPayment = new Payment();
+		testPayment.setId(100);
+		when(payRepo.existsById(100)).thenReturn(true);
+		assertTrue(payServ.delete(100));
+	}
+	
+	@Test
+	void shouldNotUpdateIfPaymentNotFound() {
+		testPayment = new Payment();
+		testPayment.setId(1);
+		when(payRepo.findById(1)).thenReturn(Optional.empty());
+		Payment p = payServ.update(testPayment);
+		assertNull(p);
+	}
+	
+	@Test
+	void shouldNotUpdatePaymentIfNewDataEmpty() {
+		testCard = new CreditCard();
+		testCard.setType("Visa");
+		testCard.setHolderFirstName("Bob");
+		testCard.setHolderLastName("Smith");
+		testCard.setExpMonth(9);
+		testCard.setExpYear(2022);
+		testCard.setNumber("4069282136832346");
+		testCard.setId(2);
+		
+		LocalDateTime current = LocalDateTime.now();
+		testPayment = new Payment(1, testCard, 1269.99, "pending", current);
+		testPayment2 = new Payment();
+		testPayment2.setId(1);
+		
+		when(payRepo.findById(1)).thenReturn(Optional.of(testPayment));
+		payServ.update(testPayment2);
+		assertEquals(testCard, testPayment.getCard());
 	}
 	
 	@Test
