@@ -41,6 +41,7 @@ public class Payment {
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "order_id")
+	@JsonIgnore
 	private Order order;
 	
 	@Column(nullable = false)
