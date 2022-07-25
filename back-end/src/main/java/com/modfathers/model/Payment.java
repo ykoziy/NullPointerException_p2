@@ -2,6 +2,7 @@ package com.modfathers.model;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.OnDelete;
@@ -37,6 +39,10 @@ public class Payment {
 	@JsonIgnore
     private CreditCard card;
 	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "order_id")
+	private Order order;
+	
 	@Column(nullable = false)
 	private double amount;
 	
@@ -52,6 +58,14 @@ public class Payment {
 		this.amount = amount;
 		this.state = state;
 	}
+	
+	public Payment(CreditCard card, double amount, String state, Order order) {
+		super();
+		this.card = card;
+		this.amount = amount;
+		this.state = state;
+		this.order = order;
+	}
 
 	public Payment(CreditCard card, double amount, String state, LocalDateTime timestamp) {
 		super();
@@ -60,4 +74,6 @@ public class Payment {
 		this.state = state;
 		this.timestamp = timestamp;
 	}
+	
+	
 }
