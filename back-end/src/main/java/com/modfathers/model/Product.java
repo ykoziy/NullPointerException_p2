@@ -6,7 +6,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,9 +25,21 @@ public class Product
 	@Column(name = "product_name", unique = true)
 	private String name;
 	
-	@Column()
+	@Column
+	private String description;
+	
+	@Column
 	private int inventory = 0;
 	
 	@Column(name = "image_ref")
 	private String imageURL;
+
+	public Product(String name, String description, int inventory, String imageURL) {
+		super();
+		this.name = name;
+		this.description = description;
+		this.inventory = inventory;
+		this.imageURL = imageURL;
+	}
 }
+

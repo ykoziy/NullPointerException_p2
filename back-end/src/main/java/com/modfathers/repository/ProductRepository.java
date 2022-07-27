@@ -1,10 +1,8 @@
 package com.modfathers.repository;
 
-import java.util.Optional;
-
 import org.springframework.data.jpa.repository.JpaRepository;
-
 import com.modfathers.model.Product;
+import java.util.Optional;
 
 public interface ProductRepository extends JpaRepository<Product, Integer>
 {

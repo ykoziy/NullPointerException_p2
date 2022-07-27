@@ -28,6 +28,11 @@ public class PaymentController {
 		return payServ.add(cardId, payment);
 	}
 	
+	@PostMapping("/add")
+	public Payment addPayment(@RequestHeader("card_id") int cardId, @RequestHeader("order_id") int orderId, @RequestBody Payment payment) {
+		return payServ.add(cardId, orderId, payment);
+	}
+	
 	@GetMapping("/id/{id}")
 	public Payment getById(@PathVariable("id") int id) {
 		return payServ.findById(id);
