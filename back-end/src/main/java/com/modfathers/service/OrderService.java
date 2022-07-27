@@ -12,9 +12,11 @@ import com.modfathers.exception.DataNotFoundException;
 import com.modfathers.model.CreditCard;
 import com.modfathers.model.Order;
 import com.modfathers.model.Payment;
+import com.modfathers.model.Product;
 import com.modfathers.model.User;
 import com.modfathers.repository.CreditCardRepository;
 import com.modfathers.repository.OrderRepository;
+import com.modfathers.repository.ProductRepository;
 import com.modfathers.repository.UserRepository;
 
 @Service
@@ -23,16 +25,19 @@ public class OrderService {
 	private final UserRepository userRepo;
 	private final OrderRepository orderRepo;
 	private final CreditCardRepository cardRepo;
+	private final ProductRepository prodRepo;
 	private final PaymentService payServ;
 
 	@Autowired
-	public OrderService(OrderRepository orderRepo, UserRepository userRepo, CreditCardRepository cardRepo, PaymentService payServ) {
-		this.orderRepo = orderRepo;
+	public OrderService(UserRepository userRepo, OrderRepository orderRepo, CreditCardRepository cardRepo,
+			ProductRepository prodRepo, PaymentService payServ) {
 		this.userRepo = userRepo;
+		this.orderRepo = orderRepo;
 		this.cardRepo = cardRepo;
+		this.prodRepo = prodRepo;
 		this.payServ = payServ;
 	}
-	
+
 	public List<Order> findByUserId(int user_id) {
 		if (user_id <= 0) {
 			return Collections.emptyList();
@@ -51,6 +56,15 @@ public class OrderService {
 				order.setUpdateDate(dt);
 				order.setOrderDate(dt);
 				order.setUser(u);
+				for (Product prod: order.getProducts()) {
+					Product storedProd = prodRepo.findById(prod.getId()).orElse(null);
+					if (storedProd != null) {
+						int quantity = storedProd.getInventory();
+						storedProd.setInventory(--quantity);
+					} else {
+						throw new DataNotFoundException("Did not find product with id: " + prod.getId());
+					}
+				}
 				Payment payment = new Payment(card, order.getAmount(), "pending", dt);
 				order.setPayment(payment);
 				Order newOrder =  orderRepo.save(order);
