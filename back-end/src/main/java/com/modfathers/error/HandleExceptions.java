@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.modfathers.exception.DataNotFoundException;
+import com.modfathers.exception.ProductAlreadyExists;
+import com.modfathers.exception.ProductDoesNotExist;
 import com.modfathers.exception.UserAlreadyExistException;
 import com.modfathers.exception.UserAuthenticationException;
 
@@ -30,6 +32,20 @@ public class HandleExceptions {
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	public @ResponseBody ErrorResponse
 	handleException(DataNotFoundException ex) {
+		return new ErrorResponse(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
+	}
+	
+	@ExceptionHandler(value = ProductAlreadyExists.class)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	public @ResponseBody ErrorResponse
+	handleException(ProductAlreadyExists ex) {
+		return new ErrorResponse(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
+	}
+	
+	@ExceptionHandler(value = ProductDoesNotExist.class)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	public @ResponseBody ErrorResponse
+	handleException(ProductDoesNotExist ex) {
 		return new ErrorResponse(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
 	}
 }
