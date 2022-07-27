@@ -18,6 +18,9 @@ import com.modfathers.repository.UserRepository;
 
 @Service
 public class UserService {
+	
+	private Logger log = LoggerFactory.getLogger(UserService.class);
+	
 	private final UserRepository userRepo;
 	private final PasswordEncoder passwordEncoder;
 	
