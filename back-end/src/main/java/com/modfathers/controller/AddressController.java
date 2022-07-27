@@ -26,13 +26,13 @@ public class AddressController {
 	private AddressService addressServ;
 	
 	
-	@PostMapping("/add/{id}")
-	public Address addAddress(@PathVariable("id") int id, @RequestBody Address addr) {
-		return addressServ.add(id, addr);
+	@PostMapping("/add/{user_id}")
+	public Address addAddress(@PathVariable("user_id") int userId, @RequestBody Address addr) {
+		return addressServ.add(userId, addr);
 	}
 	
-	@GetMapping("/id")
-	public ResponseEntity<Address> getById(@RequestHeader("id") int id) {
+	@GetMapping("/id/{id}")
+	public ResponseEntity<Address> getById(@PathVariable("id") int id) {
 		Address addr = addressServ.findById(id);
 		if (addr == null) {
 			return new ResponseEntity<Address>(HttpStatus.NO_CONTENT);
@@ -41,9 +41,9 @@ public class AddressController {
 		}
 	}
 	
-	@GetMapping("/uid")
-	public ResponseEntity<List<Address>> getByUserId(@RequestHeader("id") int id) {
-		List<Address> addrList = addressServ.findByUserId(id);
+	@GetMapping("/uid/{userId}")
+	public ResponseEntity<List<Address>> getByUserId(@PathVariable("userId") int userId) {
+		List<Address> addrList = addressServ.findByUserId(userId);
 		if (addrList.isEmpty()) {
 			return new ResponseEntity<List<Address>>(HttpStatus.NO_CONTENT);
 		} else {

@@ -53,5 +53,23 @@ public class Address {
 	@Pattern(regexp = "[0-9]*")
 	@Column(length = 5)
 	private String zip;
-	
+
+	public Address(User user, @Length(max = 100) String street, @Length(max = 40) String city,
+			@Length(min = 2, max = 2) String state, @Length(min = 5, max = 5) @Pattern(regexp = "[0-9]*") String zip) {
+		super();
+		this.user = user;
+		this.street = street;
+		this.city = city;
+		this.state = state;
+		this.zip = zip;
+	}
+
+	public Address(@Length(max = 100) String street, @Length(max = 40) String city,
+			@Length(min = 2, max = 2) String state, @Length(min = 5, max = 5) @Pattern(regexp = "[0-9]*") String zip) {
+		super();
+		this.street = street;
+		this.city = city;
+		this.state = state;
+		this.zip = zip;
+	}
 }

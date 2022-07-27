@@ -59,10 +59,24 @@ public class User {
 	
 	@Column(name = "reg_date")
 	private LocalDateTime registrationDate;
-	
+  
 	@Column(name = "cart")
 	@ManyToMany
 	@JoinColumn(name = "product_id", nullable = false)
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private List<Product> shoppingCart;
+
+	public User(@Length(min = 2) String firstName, @Length(min = 2) String lastName,
+			@Length(min = 5) @Pattern(regexp = "[a-zA-Z][a-zA-Z0-9]*") String userName, @NotBlank String password,
+			@Email String email, @Length(min = 10, max = 10) @Pattern(regexp = "[0-9]*") String phone,
+			LocalDateTime registrationDate) {
+		super();
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.userName = userName;
+		this.password = password;
+		this.email = email;
+		this.phone = phone;
+		this.registrationDate = registrationDate;
+	}
 }

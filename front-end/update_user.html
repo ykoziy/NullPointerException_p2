@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NullPointerException</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,900;1,400;1,500;1,600;1,700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/update_user_style.css" />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <div id="nav-top">
+          <p>
+            Customer Service # 1 (800) 867-3663 | 1 (800) TOS-FONE |
+            <a class="logout" href=""><u>Logout</u></a>
+          </p>
+        </div>
+        <div id="nav-bottom">
+          <div id="logo">
+            <img src="img/logo.svg" />
+          </div>
+
+          <ul>
+            <li><a href="/index.html">Home</a></li>
+            <li><a href="/products.html">Product</a></li>
+            <li><a href="/contact.html">Contact</a></li>
+            <li><a id="active-nav" href="/login.html">My Account</a></li>
+            <li>
+              <a href=""><img class="cart-icon" src="img/cart.svg" /></a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+    <main>
+      <div id="register">
+        <h1 class="styled">Update Your Information</h1>
+        <form>
+          <div id="register-form-container">
+            <div id="form_left">
+              <label for="name_field" id="">Name *</label>
+              <input
+                type="text"
+                id="name_field"
+                placeholder="First and last name"
+                required
+              />
+              <label for="username_field" id="username_label">Username *</label>
+              <input
+                type="text"
+                id="username_field"
+                placeholder="Username"
+                required
+              />
+              <label for="pass_field" id="pass_label">Password *</label>
+              <input
+                type="password"
+                id="pass_field"
+                placeholder="Password"
+                required
+              />
+              <label for="repass_field" id="repass_label"
+                >Re-enter password *</label
+              >
+              <input
+                type="password"
+                id="repass_field"
+                placeholder="Re-enter Password"
+                required
+              />
+            </div>
+
+            <div id="form_right">
+              <label for="email_field" id="email_label">Email *</label>
+              <input
+                type="email"
+                id="email_field"
+                placeholder="email@domain.com"
+                required
+              />
+              <label for="street_field" id="street_label">Address *</label>
+              <input
+                type="text"
+                id="street_field"
+                placeholder="Mailing address"
+                required
+              />
+              <div id="address_detail">
+                <label for="city_field" id="city_label">City *</label>
+
+                <input
+                  type="text"
+                  id="city_field"
+                  placeholder="City"
+                  required
+                />
+                <label for="state_field" id="state_label">State *</label>
+
+                <input
+                  type="text"
+                  id="state_field"
+                  placeholder="State"
+                  required
+                />
+                <label for="zip_field" id="zip_label">Zip *</label>
+                <input
+                  type="text"
+                  id="zip_field"
+                  placeholder="Zip code"
+                  required
+                />
+              </div>
+              <label for="tel_field" id="tel_label">Phone *</label>
+              <input
+                type="tel"
+                id="tel_field"
+                placeholder="999-999-999"
+                pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
+                required
+              />
+            </div>
+          </div>
+          <a href="update_user.html"
+            ><button class="buttontext">Submit Changes</button></a
+          >
+
+          <!-- <input id="register-btn" type="submit" value="Submit" /> -->
+        </form>
+      </div>
+    </main>
+    <script src="js/login.js"></script>
+  </body>
+</html>

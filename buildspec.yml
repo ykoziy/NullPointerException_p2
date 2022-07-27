@@ -1,0 +1,15 @@
+version: 0.2
+
+# define commands CodeBuild runs during each phase
+phases:
+  build:
+    # change directory firt, then run mvn clean package
+    commands:
+      - cd back-end
+      - mvn clean package -Ddb_user=${db_user} -Ddb_url=${db_url} -Ddb_pass=${db_pass}
+# represents information about where CodeBuild can find the build output
+artifacts:
+  # locations that contain the build output artifacts in the build environment
+  files:
+    - 'Dockerfile'
+    - 'back-end/target/back-end-0.0.1-SNAPSHOT.jar'

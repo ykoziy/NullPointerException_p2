@@ -8,7 +8,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -56,5 +55,18 @@ public class CreditCard {
     private int expMonth;
 
     @Column(name = "exp_year", nullable=false)
-    private int expYear;	
+    private int expYear;
+
+	public CreditCard(User user, @Length(min = 16, max = 16) String number, String type,
+			@Length(min = 2) String holderFirstName, @Length(min = 2) String holderLastName,
+			@Range(min = 1, max = 12) int expMonth, int expYear) {
+		super();
+		this.user = user;
+		this.number = number;
+		this.type = type;
+		this.holderFirstName = holderFirstName;
+		this.holderLastName = holderLastName;
+		this.expMonth = expMonth;
+		this.expYear = expYear;
+	} 
 }

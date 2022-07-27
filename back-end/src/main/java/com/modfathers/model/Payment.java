@@ -45,4 +45,19 @@ public class Payment {
 	
 	@Column(nullable = false)
 	private LocalDateTime timestamp;
+
+	public Payment(CreditCard card, double amount, String state) {
+		super();
+		this.card = card;
+		this.amount = amount;
+		this.state = state;
+	}
+
+	public Payment(CreditCard card, double amount, String state, LocalDateTime timestamp) {
+		super();
+		this.card = card;
+		this.amount = amount;
+		this.state = state;
+		this.timestamp = timestamp;
+	}
 }
