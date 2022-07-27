@@ -1,6 +1,5 @@
 package com.modfathers.controller;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.modfathers.model.Product;
 import com.modfathers.model.User;
 import com.modfathers.service.UserService;
 
@@ -34,7 +32,7 @@ public class UserController {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		// encode password by hashing
 		String encoded = encoder.encode(user.getPassword());
-		return userServ.registerUser(user.getUserName(), encoded, user.getFirstName(), user.getLastName(), user.getPhone(), user.getEmail(), user.getShoppingCart());
+		return userServ.registerUser(user.getUserName(), encoded, user.getFirstName(), user.getLastName(), user.getPhone(), user.getEmail());
 	}
 	
 	@PostMapping("/login")
