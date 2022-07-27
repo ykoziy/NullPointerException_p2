@@ -81,6 +81,7 @@ header {
   #logo {
     width: 300px;
     height: 50px;
+    margin-right: 10px;
   }
   
   #logo img {
@@ -177,11 +178,15 @@ button {
   font: inherit;
   cursor: pointer;
   outline: inherit;
+  align-self: center;
 }
 
 .buttontext {
-  color: #E0FBFC;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  color: #e0fbfc;
 }
+
 #action-btn-container {
   align-self: flex-start;
 }
