@@ -1,0 +1,272 @@
+:root {
+    --logo-font: 'Montserrat', sans-serif;
+  }
+
+  p.special {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 35px;
+  }
+
+  h1.special {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    text-align: left;
+  }
+
+  p.body {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    line-height: 1.6;
+  }
+  
+  html {
+    box-sizing: border-box;
+    font-size: 62.5%;
+    color: #e1fbfb;
+    /* selected element color: #ea6a51 */
+  }
+  
+  *,
+  *:before,
+  *:after {
+    box-sizing: inherit;
+    margin: 0;
+    padding: 0;
+  }
+  
+  body * {
+    /*   border: 1px solid red; */
+  }
+  
+  body {
+    height: 100vh;
+    width: 100%;
+    font-size: 1.9rem;
+  }
+  
+/* Header Styling */
+
+header {
+  background-color: #293240;
+  padding-top: 6px;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+  /* Nav Styling */
+  
+  nav {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 900px;
+  }
+  
+  nav #nav-top {
+    flex: 2;
+    color: #ec6b50;
+    align-self: flex-end;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-style: italic;
+  }
+
+  nav #nav-bottom {
+    display: flex;
+    align-items: center;
+    padding-bottom: 0 px;
+    justify-content: space-between;
+    width: 100%;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+  }
+  
+  #nav-bottom h1 {
+    font-family: var(--logo-font);
+    padding: 15px;
+  }
+  
+  #nav-bottom h1 span {
+    color: #ec6b50;
+  }
+  
+  #logo {
+    width: 300px;
+    height: 50px;
+  }
+  
+  #logo img {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+  
+  nav a {
+    text-decoration: none;
+    color: white;
+  }
+  
+  nav ul {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 50px;
+  }
+  
+  nav ul > li {
+    white-space: nowrap;
+  }
+  
+  .cart-icon {
+    height: 50px;
+    width: 50px;
+  }
+
+  #active-nav {
+    color: #ec6b50;
+  }
+
+  a.logout {
+    color: #ec6b50;
+}
+  
+  /* Main Style */
+  main {
+    background: rgb(81, 112, 144);
+    background: linear-gradient(
+      45deg,
+      rgba(81, 112, 144, 1) 4%,
+      rgba(114, 150, 178, 1) 81%
+    );
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  
+  main > #call-to-action {
+    display: grid;
+    margin-top: 85px;
+    align-self: flex-start;
+    gap: 35px;
+    grid-template-rows: 6fr 1fr;
+    grid-template-columns: 1fr 1fr;
+    height: 500px;
+    width: 900px;
+  }
+  
+  #action {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  #action h1 {
+    font-size: 4.5rem;
+    text-align: left;
+  }
+  
+  #action p {
+    font-size: 2.2rem;
+  }
+  
+  /* Carousel Style */
+  .img-carousel {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .carousel-img-container {
+    flex: auto;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .carousel-nav-container {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .carousel-nav {
+    display: flex;
+    padding-top: 15px;
+    justify-content: space-between;
+    width: 30%;
+  }
+  
+  .carousel-dot {
+    background-color: #a3b4c5;
+    border-radius: 50%;
+    width: 15px;
+    height: 15px;
+  }
+  
+  .active-dot {
+    background-color: #feffff;
+  }
+  
+  .img-slide {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    display: flex;
+    /* background-color: sienna; */
+    transition: all 0.6s;
+    transition-timing-function: ease-in;
+  }
+
+  .img-slide img {
+    height: 100%;
+    width: 100;
+    object-fit: cover;
+  }
+  
+
+  /* Action Style */
+  #action-bottom {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  button {
+    background: gray;
+    color: inherit;
+    border: none;
+    border-radius: 10px;
+    padding: 15px 35px;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+  }
+  
+  #action-btn-container {
+    align-self: flex-start;
+  }
+  
+  #action button {
+    background-color: #ec6b50;
+  }
+  
+  #action-bottom button {
+    background-color: #293240;
+    padding: 15px 75px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+  }
+
+  h1.title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    text-align: left;
+  }
