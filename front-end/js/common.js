@@ -1,4 +1,32 @@
 'use strict';
+class ErrorModal {
+  static show(errorMessage) {
+    const modalContainer = document.createElement('div');
+    modalContainer.classList.add('modal-container');
+
+    const modal = document.createElement('div');
+    modal.classList.add('error-modal');
+
+    const msg = document.createElement('h1');
+    msg.innerText = errorMessage;
+
+    modal.appendChild(msg);
+    modalContainer.prepend(modal);
+
+    const mainElement = document.querySelector('main');
+
+    modal.addEventListener('click', this.hide);
+    document.body.insertBefore(modalContainer, mainElement);
+  }
+
+  static hide() {
+    const modalContainer = document.querySelector('.modal-container');
+    if (modalContainer) {
+      modalContainer.remove();
+    }
+  }
+}
+
 class CookieManager {
   static setCookie(id, userName) {
     const d = new Date();
