@@ -64,7 +64,7 @@ header {
       width: 100%;
       font-family: 'Montserrat', sans-serif;
       font-weight: 700;
-      gap: 40px;
+      /* gap: 40px; */
     }
     
     #nav-bottom h1 {
@@ -555,10 +555,10 @@ header {
   }
 
   #cart-container {
-    margin-top: 85px;
+    margin-top: 65px;
     display: flex;
     justify-content: center;
-    gap: 150px;
+    gap: 20px;
   }
   
   #cart-container button {
@@ -569,38 +569,24 @@ header {
   .right-cart-container {
     display: flex;
     flex-direction: column;
-    gap: 15px;
-    width: 600px;
+    gap: 5px;
+    width: 300px;
     color: black;
-    padding: 30px;
     border-radius: 20px;
-    background-color: #e2fbfc;
-  }
-  
-  .sutotal-container,
-  .delivery-container {
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  #delivery-options {
-    width: 100%;
-    height: 45px;
-    line-height: 45px;
-    font-size: 1.5rem;
-    font-weight: bold;
-    border-bottom: 1px solid black;
+    /* background-color: #e2fbfc; */
+    align-items:center;
+    justify-content: center;
   }
 
-  .cc-container {
-    display: flex;
-    gap: 20px;
+  .user {
+    width: 290px;
+    height: 290px;
   }
-  
+    
   .left-cart-container {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 10px;
     width: 600px;
     color: black;
     padding: 20px;

@@ -170,7 +170,7 @@ main > #call-to-action {
 }
 
 button {
-  background: gray;
+  background: #EE6C4D;
   color: inherit;
   border: none;
   border-radius: 10px;
@@ -178,6 +178,13 @@ button {
   font: inherit;
   cursor: pointer;
   outline: inherit;
+  align-self: center;
+}
+
+.buttontext {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  color: #e0fbfc;
 }
 
 #action-btn-container {
