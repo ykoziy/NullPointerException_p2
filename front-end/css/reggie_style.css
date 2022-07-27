@@ -98,7 +98,7 @@ header {
     list-style: none;
     display: flex;
     align-items: center;
-    gap: 50px;
+    gap: 30px;
   }
   
   nav ul > li {
@@ -169,7 +169,7 @@ main > #call-to-action {
 }
 
 button {
-  background: gray;
+  background: #EE6C4D;
   color: inherit;
   border: none;
   border-radius: 10px;
@@ -179,6 +179,9 @@ button {
   outline: inherit;
 }
 
+.buttontext {
+  color: #E0FBFC;
+}
 #action-btn-container {
   align-self: flex-start;
 }

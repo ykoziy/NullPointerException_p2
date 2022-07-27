@@ -54,7 +54,6 @@ header {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
 }
 
   /* Nav Styling */
@@ -116,7 +115,7 @@ header {
     list-style: none;
     display: flex;
     align-items: center;
-    gap: 50px;
+    gap: 30px;
   }
   
   nav ul > li {
