@@ -1,6 +1,7 @@
 package com.modfathers.service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import com.modfathers.exception.UserAlreadyExistException;
 import com.modfathers.exception.UserAuthenticationException;
+import com.modfathers.model.Product;
 import com.modfathers.model.User;
 import com.modfathers.repository.UserRepository;
 
@@ -30,10 +32,10 @@ public class UserService {
 		this.passwordEncoder = new BCryptPasswordEncoder();
 	}
 	
-	public User registerUser(String userName, String password, String firstName, String lastName, String phone, String email) {
+	public User registerUser(String userName, String password, String firstName, String lastName, String phone, String email, List<Product> shopingCart) {
 		User u = userRepo.findByEmail(email).orElse(null);
 		if (u == null) {
-			User user = new User(0, firstName, lastName, userName, password, email, phone, LocalDateTime.now());
+			User user = new User(0, firstName, lastName, userName, password, email, phone, LocalDateTime.now(), shopingCart);
 			return userRepo.save(user);
 		} else {
 			throw new UserAlreadyExistException("User already exists with this email");
