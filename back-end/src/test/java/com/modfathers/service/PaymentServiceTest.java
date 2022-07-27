@@ -20,8 +20,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.modfathers.exception.DataNotFoundException;
 import com.modfathers.model.Address;
 import com.modfathers.model.CreditCard;
+import com.modfathers.model.Order;
 import com.modfathers.model.Payment;
 import com.modfathers.repository.CreditCardRepository;
+import com.modfathers.repository.OrderRepository;
 import com.modfathers.repository.PaymentRepository;
 
 // loads junit extension
@@ -35,15 +37,19 @@ public class PaymentServiceTest {
 	@Mock
 	private CreditCardRepository cardRepo;
 	
+	@Mock
+	private OrderRepository orderRepo;
+	
 	private PaymentService payServ;
 	private Payment testPayment;
 	private Payment testPayment2;
 	private CreditCard testCard;
+	private Order testOrder;
 	
 	
 	@BeforeEach
 	void beforeEach() {
-		payServ = new PaymentService(payRepo, cardRepo);
+		payServ = new PaymentService(payRepo, cardRepo, orderRepo);
 	}
 	
 	@AfterEach
@@ -51,6 +57,7 @@ public class PaymentServiceTest {
 		testPayment = null;
 		testCard = null;
 		testPayment2 = null;
+		testOrder = null;
 	}
 	
 	@Test
@@ -72,7 +79,7 @@ public class PaymentServiceTest {
 		testCard.setNumber("4069282136832346");
 		testCard.setId(1);
 		
-		testPayment = new Payment(testCard, 1269.99, "pending", null);
+		testPayment = new Payment(testCard, 1269.99, "pending", testOrder);
 		
 		when(cardRepo.findById(1)).thenReturn(Optional.of(testCard));
 		when(payRepo.save(testPayment)).thenReturn(testPayment);
@@ -95,7 +102,7 @@ public class PaymentServiceTest {
 		testCard.setNumber("4069282136832346");
 		testCard.setId(2);
 		
-		testPayment = new Payment(1, testCard, 1269.99, "pending", LocalDateTime.now());
+		testPayment = new Payment(1, testCard, testOrder, 1269.99, "pendig", LocalDateTime.now());
 		when(payRepo.findById(1)).thenReturn(Optional.of(testPayment));
 		Payment newPayment = payServ.findById(1);
 		assertEquals(testCard, newPayment.getCard());
@@ -140,7 +147,7 @@ public class PaymentServiceTest {
 		testCard.setId(2);
 		
 		LocalDateTime current = LocalDateTime.now();
-		testPayment = new Payment(1, testCard, 1269.99, "pending", current);
+		testPayment = new Payment(1, testCard, testOrder, 1269.99, "pendig", current);
 		testPayment2 = new Payment();
 		testPayment2.setId(1);
 		
@@ -161,8 +168,8 @@ public class PaymentServiceTest {
 		testCard.setId(2);
 		
 		LocalDateTime current = LocalDateTime.now();
-		testPayment = new Payment(1, testCard, 1269.99, "pending", current);
-		testPayment2 = new Payment(1, testCard, 1000.99, "cleared", current);
+		testPayment = new Payment(1, testCard, testOrder, 1269.99, "pending", current);
+		testPayment2 = new Payment(1, testCard, testOrder, 1000.99, "cleared", current);
 		
 		when(payRepo.findById(1)).thenReturn(Optional.of(testPayment));
 		payServ.update(testPayment2);
