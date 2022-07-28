@@ -1,9 +1,6 @@
-//! image placeholder
-//! https://placeholder.pics/svg/141x160/E4FF92-79FFE0/FF8746-000000/no%20img%20%3A(
-//! gaming, systems, components, electronics
-//! _selected
-
 (() => {
+  const MIN_ITEMS = 1;
+  const MAX_ITEMS = 20;
   const API_URL =
     'http://nullpointerexception-env.eba-jvp359am.us-east-1.elasticbeanstalk.com/product/category';
 
@@ -44,6 +41,7 @@
 
   new ProducstNav();
 
+  //https://placeholder.pics/svg/141x160/E4FF92-79FFE0/FF8746-000000/no%20img%20%3A(
   const createProductCard = (product) => {
     const productCard = document.createElement('div');
 
@@ -56,7 +54,7 @@
 
     const cardTemplate = `
          <div class="product-image">
-            <img src="https://placeholder.pics/svg/141x160/E4FF92-79FFE0/FF8746-000000/no%20img%20%3A(" />
+            <img src="${product.imageURL}" />
          </div>
          <div class="product-description">
             <p class="body">
@@ -89,6 +87,13 @@
     products.forEach((i) => {
       con.appendChild(createProductCard(i));
     });
+    //;
+    con
+      .querySelectorAll('.product-q-plus')
+      .forEach((i) => i.addEventListener('click', plusAction));
+    con
+      .querySelectorAll('.product-q-minus')
+      .forEach((i) => i.addEventListener('click', minusAction));
   };
 
   const getProducts = async (categoryName) => {
@@ -105,4 +110,24 @@
   };
 
   getProducts('components');
+
+  function plusAction(event) {
+    const parent = event.currentTarget.parentNode;
+    const node = parent.querySelector('.product-q');
+    let count = parseInt(node.innerHTML);
+    let newCount = count++;
+    if (newCount < MAX_ITEMS) {
+      node.innerHTML = count;
+    }
+  }
+
+  function minusAction(event) {
+    const parent = event.currentTarget.parentNode;
+    const node = parent.querySelector('.product-q');
+    let count = parseInt(node.innerHTML);
+    let newCount = count--;
+    if (newCount > MIN_ITEMS) {
+      node.innerHTML = count;
+    }
+  }
 })();
