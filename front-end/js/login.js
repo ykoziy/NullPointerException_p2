@@ -1,6 +1,9 @@
 'use strict';
 (() => {
   const loginForm = document.querySelector('#login form');
+  if (!loginForm) {
+    return;
+  }
   loginForm.addEventListener('submit', loginAction);
 
   const API_URL =

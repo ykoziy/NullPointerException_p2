@@ -53,8 +53,11 @@ const STATES = [
 ];
 
 (() => {
-  const loginForm = document.querySelector('#register form');
-  loginForm.addEventListener('submit', loginAction);
+  const registerForm = document.querySelector('#register form');
+  if (!registerForm) {
+    return;
+  }
+  registerForm.addEventListener('submit', loginAction);
 
   const API_URL =
     'http://nullpointerexception-env.eba-jvp359am.us-east-1.elasticbeanstalk.com';

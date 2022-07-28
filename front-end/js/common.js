@@ -1,4 +1,68 @@
 'use strict';
+class CookieManager {
+  static setCookie(id, userName) {
+    const d = new Date();
+    d.setTime(d.getTime() + 12 * 60 * 60 * 1000);
+    const expires = d.toUTCString();
+    const cookieObj = {
+      id,
+      userName,
+    };
+
+    document.cookie = `userinfo=${JSON.stringify(
+      cookieObj,
+    )}; expires=${expires}; path=/`;
+  }
+
+  static getUserinfo() {
+    const name = 'userinfo=';
+    const decodedCookie = decodeURIComponent(document.cookie);
+    const cookieArray = decodedCookie.split('; ');
+    let res;
+    if (document.cookie.length === 0) {
+      return null;
+    }
+    cookieArray.forEach((val) => {
+      if (val.indexOf(name) === 0) {
+        res = val.substring(name.length);
+      }
+    });
+    return JSON.parse(res);
+  }
+
+  static getUserId() {
+    if (this.getUserinfo()) {
+      return this.getUserinfo().id;
+    }
+    return null;
+  }
+
+  static getUsername() {
+    if (this.getUserinfo()) {
+      return this.getUserinfo().id;
+    }
+    return null;
+  }
+
+  static delete() {
+    document.cookie =
+      'userinfo=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+  }
+}
+
+(() => {
+  const cartIcon = document.querySelector('li .cart-icon').parentElement;
+  const loginRegistrationLink = document.getElementById('logreg');
+  if (!CookieManager.getUserId()) {
+    cartIcon.hidden = true;
+    loginRegistrationLink.innerHTML = '<a href="/login.html">Login</a>';
+  } else {
+    cartIcon.hidden = false;
+    loginRegistrationLink.innerHTML =
+      '<a href="/myaccount.html">My Account</a>';
+  }
+})();
+
 class ErrorModal {
   static show(errorMessage) {
     const modalContainer = document.createElement('div');
@@ -27,79 +91,44 @@ class ErrorModal {
   }
 }
 
-class CookieManager {
-  static setCookie(id, userName) {
-    const d = new Date();
-    d.setTime(d.getTime() + 12 * 60 * 60 * 1000);
-    const expires = d.toUTCString();
-    const cookieObj = {
-      id,
-      userName,
-    };
-
-    document.cookie = `userinfo=${JSON.stringify(
-      cookieObj,
-    )}; expires=${expires}; path=/`;
-  }
-
-  static getUserinfo() {
-    const name = 'userinfo=';
-    const decodedCookie = decodeURIComponent(document.cookie);
-    const cookieArray = decodedCookie.split('; ');
-    let res;
-    cookieArray.forEach((val) => {
-      if (val.indexOf(name) === 0) {
-        res = val.substring(name.length);
-      }
-    });
-    return JSON.parse(res);
-  }
-
-  static getUserId() {
-    return this.getCookieUserinfo().id;
-  }
-
-  static getUsername() {
-    return this.getCookieUserinfo().userName;
-  }
-
-  static delete() {
-    document.cookie =
-      'userinfo=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-  }
-}
-
 class Cart {
   constructor() {
-    this.cart = [];
+    sessionStorage.removeItem('cart');
   }
 
   add(item) {
-    const foundItem = this.getItem(item.id);
+    const cart = [...this.#unpackCart()];
+    let foundItem = cart.find((i) => i.id === item.id);
     if (foundItem) {
       foundItem.quantity++;
     } else {
       const quant = { quantity: 1 };
       const cartItem = { ...item, ...quant };
-      this.cart.push(cartItem);
+      cart.push(cartItem);
     }
+    this.#packCart(cart);
   }
 
   remove(itemId) {
-    for (let i = this.cart.length - 1; i >= 0; i--) {
-      if (this.cart[i].id === itemId) {
-        this.cart.splice(i, 1);
+    let cart = [...this.#unpackCart()];
+    console.log(cart);
+    for (let i = cart.length - 1; i >= 0; i--) {
+      if (cart[i].id === itemId) {
+        cart.splice(i, 1);
         break;
       }
     }
+    this.#packCart(cart);
   }
 
   clear() {
     this.cart = [];
+    sessionStorage.removeItem('cart');
   }
 
   changeQuantity(itemId, isAdding = true) {
-    const item = this.cart.find((item) => item.id === itemId);
+    let cart = this.#unpackCart();
+    const item = cart.find((item) => item.id === itemId);
     if (!item) {
       return;
     }
@@ -112,39 +141,45 @@ class Cart {
         this.remove(item.id);
       }
     }
+    this.#packCart(cart);
   }
 
   getItem(itemId) {
-    return this.cart.find((item) => item.id === itemId);
+    let cart = [...this.#unpackCart()];
+    return cart.find((item) => item.id === itemId);
   }
 
   getCart() {
-    return this.cart;
+    let cart = [...this.#unpackCart()];
+    return cart;
   }
 
   getItemTotal(itemId) {
-    const item = this.cart.find((item) => item.id === itemId);
-    return item.quantity * item.price;
+    let cart = [...this.#unpackCart()];
+    const item = cart.find((item) => item.id === itemId);
+    return item.quantity * parseFloat(item.price);
   }
 
   getTotal() {
-    return this.cart.reduce((prev, curr) => {
-      return prev + curr.price * curr.quantity;
+    let cart = [...this.#unpackCart()];
+    return cart.reduce((prev, curr) => {
+      parseInt;
+      return prev + parseFloat(curr.price) * parseFloat(curr.quantity);
     }, 0);
   }
+
+  #packCart(cart) {
+    const jsonCart = JSON.stringify(cart);
+    sessionStorage.setItem('cart', jsonCart);
+  }
+
+  #unpackCart() {
+    let cartSession = sessionStorage.getItem('cart');
+    let cartItems = JSON.parse(cartSession);
+    if (cartItems != null) {
+      return JSON.parse(cartSession);
+    } else {
+      return [];
+    }
+  }
 }
-
-/* 
-const itemA = {
-  id: 'product_id_A',
-  name: 'Super CPU AZ1',
-  price: 956.99,
-};
-
-const cart = new Cart();
-
-cart.add(itemA);
-cart.add(itemA);
-console.log(cart.getCart());
-console.log(cart.getTotal());
- */
