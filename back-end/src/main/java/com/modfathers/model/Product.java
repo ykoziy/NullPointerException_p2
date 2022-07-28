@@ -28,11 +28,17 @@ public class Product
 	@Column
 	private String description;
 	
-	@Column
+	@Column(nullable = false)
 	private int inventory = 0;
 	
 	@Column(name = "image_ref")
 	private String imageURL;
+	
+	@Column(nullable = false)
+	private String category;
+	
+	@Column(nullable = false)
+	private Double price;
 
 	public Product(String name, String description, int inventory, String imageURL) {
 		super();
