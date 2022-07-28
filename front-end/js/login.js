@@ -1,5 +1,12 @@
 'use strict';
 (() => {
+  const logoutLink = document.querySelector('.logout');
+  logoutLink.addEventListener('click', logoutAction);
+  function logoutAction() {
+    CookieManager.delete();
+    location.href = '/index.html';
+  }
+
   const loginForm = document.querySelector('#login-btn');
   if (!loginForm) {
     return;
