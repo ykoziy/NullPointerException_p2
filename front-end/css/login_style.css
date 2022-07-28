@@ -320,14 +320,14 @@ button {
   grid-row: 2 / 3;
 }
 
-#login-btn {
+/* #login-btn {
   font-family: 'Montserrat', sans-serif;
   font-weight: 400;
   color: #E0FBFC;
   background-color: #EE6C4D;
   grid-column: 1 / -1;
   grid-row: 3 / 4;
-}
+} */
 
 /* Registration Styling */
 #register {
