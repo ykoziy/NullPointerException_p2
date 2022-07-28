@@ -77,6 +77,9 @@
     productCard.insertAdjacentHTML('beforeend', priceH);
     productCard.insertAdjacentHTML('beforeend', productMod);
     productCard.insertAdjacentHTML('beforeend', button);
+    productCard
+      .querySelector('.add-cart-btn')
+      .addEventListener('click', (evt) => cartAction(evt, product));
     return productCard;
   };
 
@@ -129,5 +132,16 @@
     if (newCount > MIN_ITEMS) {
       node.innerHTML = count;
     }
+  }
+
+  function cartAction(evt, product) {
+    const itemCount =
+      evt.currentTarget.parentNode.querySelector('.product-q').innerHTML;
+    delete product['inventory'];
+    delete product['description'];
+    delete product['category'];
+    console.log(itemCount);
+    product.quantity = itemCount;
+    Cart.add(product);
   }
 })();

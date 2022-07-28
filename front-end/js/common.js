@@ -96,20 +96,19 @@ class Cart {
     sessionStorage.removeItem('cart');
   }
 
-  add(item) {
+  static add(item) {
     const cart = [...this.#unpackCart()];
     let foundItem = cart.find((i) => i.id === item.id);
     if (foundItem) {
       foundItem.quantity++;
     } else {
-      const quant = { quantity: 1 };
-      const cartItem = { ...item, ...quant };
+      const cartItem = { ...item };
       cart.push(cartItem);
     }
     this.#packCart(cart);
   }
 
-  remove(itemId) {
+  static remove(itemId) {
     let cart = [...this.#unpackCart()];
     console.log(cart);
     for (let i = cart.length - 1; i >= 0; i--) {
@@ -121,12 +120,12 @@ class Cart {
     this.#packCart(cart);
   }
 
-  clear() {
+  static clear() {
     this.cart = [];
     sessionStorage.removeItem('cart');
   }
 
-  changeQuantity(itemId, isAdding = true) {
+  static changeQuantity(itemId, isAdding = true) {
     let cart = this.#unpackCart();
     const item = cart.find((item) => item.id === itemId);
     if (!item) {
@@ -144,23 +143,23 @@ class Cart {
     this.#packCart(cart);
   }
 
-  getItem(itemId) {
+  static getItem(itemId) {
     let cart = [...this.#unpackCart()];
     return cart.find((item) => item.id === itemId);
   }
 
-  getCart() {
+  static getCart() {
     let cart = [...this.#unpackCart()];
     return cart;
   }
 
-  getItemTotal(itemId) {
+  static getItemTotal(itemId) {
     let cart = [...this.#unpackCart()];
     const item = cart.find((item) => item.id === itemId);
     return item.quantity * parseFloat(item.price);
   }
 
-  getTotal() {
+  static getTotal() {
     let cart = [...this.#unpackCart()];
     return cart.reduce((prev, curr) => {
       parseInt;
@@ -168,12 +167,12 @@ class Cart {
     }, 0);
   }
 
-  #packCart(cart) {
+  static #packCart(cart) {
     const jsonCart = JSON.stringify(cart);
     sessionStorage.setItem('cart', jsonCart);
   }
 
-  #unpackCart() {
+  static #unpackCart() {
     let cartSession = sessionStorage.getItem('cart');
     let cartItems = JSON.parse(cartSession);
     if (cartItems != null) {
