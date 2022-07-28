@@ -5,16 +5,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>NullPointerException</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,900;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet"> 
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,900;1,400;1,500;1,600;1,700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="css/contact_style.css" />
   </head>
   <body>
     <header>
       <nav>
         <div id="nav-top">
-          <p>Customer Service # 1 (800) 867-3663 | 1 (800) TOS-FONE | <a class="logout" href=""><u>Logout</u></a></p>
+          <p>
+            Customer Service # 1 (800) 867-3663 | 1 (800) TOS-FONE |
+            <a class="logout"><u>Logout</u></a>
+          </p>
         </div>
         <div id="nav-bottom">
           <div id="logo">
@@ -26,39 +32,50 @@
             <li><a id="active-nav" href="">Contact</a></li>
             <li><a href="/login.html">Login</a></li>
             <li>
-              <a href="/cart.html"><img class="cart-icon" src="img/cart.svg" /></a>
+              <a href="/cart.html"
+                ><img class="cart-icon" src="img/cart.svg"
+              /></a>
             </li>
           </ul>
         </div>
       </nav>
     </header>
-  <main>
-    <div id="cart">
-      <div>
-        <h1 class="special">Contact</h1>
-      </div>
-      <div id="cart-container">
-        <div class="center-cart-container">
-          <div class="cart-item-aside">
-          <form>
-            <label for="username_field" id="username_label">Name * </label>
-            <input type="text" id="username_field" placeholder="Username" />
-            <label for="password_field" id="password_label">Email * </label>
-            <input type="password" id="password_field" placeholder="Password" />
-
-          <label for="subject">Subject *</label>
-          <textarea id="subject" name="subject" placeholder="How may we help you.." style="height:100px; width: 300px; margin: 0; padding: 0;"></textarea>
-
-          <!-- <input type="submit" value="Submit"> -->
-        </form>
+    <main>
+      <div id="cart">
         <div>
-          <button class="buttontext">Submit Message</button>
-          <!-- <a href="update_user.html"><button class="buttontext">Update Info</button></a> -->
+          <h1 class="special">Contact</h1>
         </div>
-        </div>
+        <div id="cart-container">
+          <div class="center-cart-container">
+            <div class="cart-item-aside">
+              <form>
+                <label for="username_field" id="username_label">Name * </label>
+                <input type="text" id="username_field" placeholder="Username" />
+                <label for="password_field" id="password_label">Email * </label>
+                <input
+                  type="password"
+                  id="password_field"
+                  placeholder="Password"
+                />
+
+                <label for="subject">Subject *</label>
+                <textarea
+                  id="subject"
+                  name="subject"
+                  placeholder="How may we help you.."
+                  style="height: 100px; width: 300px; margin: 0; padding: 0"
+                ></textarea>
+
+                <!-- <input type="submit" value="Submit"> -->
+              </form>
+              <div>
+                <button class="buttontext">Submit Message</button>
+                <!-- <a href="update_user.html"><button class="buttontext">Update Info</button></a> -->
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </main>
+    </main>
   </body>
 </html>
