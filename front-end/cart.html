@@ -36,8 +36,9 @@
             <li id="logreg"><a href="/login.html">My Account</a></li>
             <li>
               <a href="/cart.html"
-                ><img class="cart-icon" src="img/cart-active.svg"
-              /></a>
+                ><div id="cart-img" count="2">
+                  <img class="cart-icon" src="img/cart.svg" /></div
+              ></a>
             </li>
           </ul>
         </div>
@@ -48,39 +49,16 @@
         <h1 class="styled">My Cart</h1>
         <div id="cart-container">
           <div class="left-cart-container">
-            <div class="cart-item-container">
-              <div class="cart-item">
-                <div class="cart-img">
-                  <img src="img/mouse.png" />
-                </div>
-                <div class="cart-item-aside">
-                  <div>Razer DeathAdder V2 Pro Wireless Gaming</div>
-                  <div>Mouse - Classic Black</div>
-                  <div clas="cart-item-quant">Quantity: <span>1</span></div>
-                  <div>$119.99</div>
-                  <div><a href="">Remove item</a></div>
-                </div>
-              </div>
-              <div class="cart-item">
-                <div class="cart-img">
-                  <img src="img/drive.png" />
-                </div>
-                <div class="cart-item-aside">
-                  <div>Razer DeathAdder V2 Pro Wireless Gaming</div>
-                  <div>Mouse - Classic Black</div>
-                  <div clas="cart-item-quant">Quantity: <span>2</span></div>
-                  <div>$119.99</div>
-                  <div><a href="">Remove item</a></div>
-                </div>
-              </div>
-            </div>
-            <button class="buttontext">Continue Shopping</button>
+            <div class="cart-item-container"></div>
+            <a href="/products.html">
+              <button class="buttontext">Continue Shopping</button></a
+            >
           </div>
           <div class="right-cart-container">
             <h3 class="cart-total">Total</h3>
             <div class="sutotal-container">
               <h4 class="styled">Subtotal</h4>
-              <h4 class="styled2">244.98</h4>
+              <h4 class="styled2" id="sub-total">0.00</h4>
             </div>
             <div class="delivery-container">
               <h4 class="styled">Delivery</h4>
@@ -92,7 +70,9 @@
                 <option value="delivery_fast">Fast delivery (priceless)</option>
               </select>
             </div>
-            <button class="buttontext">Checkout</button>
+            <a href="/place_order.html">
+              <button class="buttontext">Checkout</button></a
+            >
             <h4 class="styled2">We accept:</h4>
             <div class="cc-container">
               <img class="visa" src="img/visa.svg" />
@@ -108,6 +88,7 @@
       </div>
     </main>
     <script src="js/common.js"></script>
+    <script src="js/cart.js"></script>
     <script src="js/login.js"></script>
   </body>
 </html>

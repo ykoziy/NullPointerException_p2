@@ -138,10 +138,10 @@
     const itemCount =
       evt.currentTarget.parentNode.querySelector('.product-q').innerHTML;
     delete product['inventory'];
-    delete product['description'];
+    //delete product['description'];
     delete product['category'];
-    console.log(itemCount);
-    product.quantity = itemCount;
+    product.quantity = parseInt(itemCount);
     Cart.add(product);
+    Cart.updateBadge();
   }
 })();

@@ -50,19 +50,6 @@ class CookieManager {
   }
 }
 
-(() => {
-  const cartIcon = document.querySelector('li .cart-icon').parentElement;
-  const loginRegistrationLink = document.getElementById('logreg');
-  if (!CookieManager.getUserId()) {
-    cartIcon.hidden = true;
-    loginRegistrationLink.innerHTML = '<a href="/login.html">Login</a>';
-  } else {
-    cartIcon.hidden = false;
-    loginRegistrationLink.innerHTML =
-      '<a href="/myaccount.html">My Account</a>';
-  }
-})();
-
 class ErrorModal {
   static show(errorMessage) {
     const modalContainer = document.createElement('div');
@@ -100,7 +87,7 @@ class Cart {
     const cart = [...this.#unpackCart()];
     let foundItem = cart.find((i) => i.id === item.id);
     if (foundItem) {
-      foundItem.quantity++;
+      foundItem.quantity = +foundItem.quantity + parseInt(item.quantity);
     } else {
       const cartItem = { ...item };
       cart.push(cartItem);
@@ -110,7 +97,6 @@ class Cart {
 
   static remove(itemId) {
     let cart = [...this.#unpackCart()];
-    console.log(cart);
     for (let i = cart.length - 1; i >= 0; i--) {
       if (cart[i].id === itemId) {
         cart.splice(i, 1);
@@ -167,6 +153,15 @@ class Cart {
     }, 0);
   }
 
+  static getTotalCount() {
+    let cart = [...this.#unpackCart()];
+    let total = 0;
+    for (const item of cart) {
+      total += parseInt(item.quantity);
+    }
+    return total;
+  }
+
   static #packCart(cart) {
     const jsonCart = JSON.stringify(cart);
     sessionStorage.setItem('cart', jsonCart);
@@ -181,4 +176,21 @@ class Cart {
       return [];
     }
   }
+  static updateBadge() {
+    const cartImg = document.querySelector('#cart-img');
+    cartImg.setAttribute('count', this.getTotalCount());
+  }
 }
+
+(() => {
+  const loginRegistrationLink = document.getElementById('logreg');
+  Cart.updateBadge();
+  if (!CookieManager.getUserId()) {
+    //cartIcon.hidden = true; ---debug mode
+    loginRegistrationLink.innerHTML = '<a href="/login.html">Login</a>';
+  } else {
+    //cartIcon.hidden = false; ---debug mode
+    loginRegistrationLink.innerHTML =
+      '<a href="/myaccount.html">My Account</a>';
+  }
+})();
