@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.modfathers.model.Address;
 import com.modfathers.model.Product;
 import com.modfathers.service.ProductService;
 
@@ -78,5 +80,16 @@ public class ProductController
 	public boolean deleteProduct(@RequestHeader("id") int id)
 	{
 		return productServ.delete(id);
+	}
+	
+	@GetMapping("/category/{category}")
+	public ResponseEntity<List<Product>> getAllByCategoryName(@PathVariable("category") String category) {
+		List<Product> prodList = productServ.getAllByCategoryName(category);
+		System.out.println(prodList);
+		if (prodList.isEmpty()) {
+			return new ResponseEntity<List<Product>>(HttpStatus.NO_CONTENT);
+		} else {
+			return new ResponseEntity<List<Product>>(prodList, HttpStatus.OK);
+		}
 	}
 }

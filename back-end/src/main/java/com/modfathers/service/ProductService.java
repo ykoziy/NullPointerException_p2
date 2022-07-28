@@ -1,5 +1,6 @@
 package com.modfathers.service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.modfathers.exception.ProductAlreadyExists;
 import com.modfathers.exception.ProductDoesNotExist;
+import com.modfathers.model.Address;
 import com.modfathers.model.Product;
 import com.modfathers.repository.ProductRepository;
 
@@ -66,6 +68,14 @@ public class ProductService
 	{
 		return productRepo.findAll().stream().collect(Collectors.toSet());
 	}*/
+	
+	public List<Product> getAllByCategoryName(String category) {
+		try {
+			return productRepo.getByCategory(category);
+		} catch (Exception e) {
+			throw new ProductDoesNotExist("could not find products for category: " + category);
+		}
+	}
 	
 	public Product FindProductByName(String name)
 	{
