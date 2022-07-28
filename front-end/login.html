@@ -5,16 +5,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>NullPointerException</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,900;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet"> 
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,900;1,400;1,500;1,600;1,700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="css/login_style.css" />
   </head>
   <body>
     <header>
       <nav>
         <div id="nav-top">
-          <p>Customer Service # 1 (800) 867-3663 | 1 (800) TOS-FONE | <a class="logout" href=""><u>Logout</u></a></p>
+          <p>
+            Customer Service # 1 (800) 867-3663 | 1 (800) TOS-FONE |
+            <a class="logout" href=""><u>Logout</u></a>
+          </p>
         </div>
         <div id="nav-bottom">
           <!-- <h1>NULL<span>POINTER</span>EXCEPTION</h1> -->
@@ -25,8 +31,8 @@
           <ul>
             <li><a href="/index.html">Home</a></li>
             <li><a href="/product.html">Product</a></li>
-            <li><a href="contact.html">Contact</a></li>
-            <li><a id="active-nav" href="/login.html">Login</a></li>
+            <li><a href="/contact.html">Contact</a></li>
+            <li id="logreg"><a id="active-nav" href="/login.html">Login</a></li>
             <li>
               <a href=""><img class="cart-icon" src="img/cart.svg" /></a>
             </li>
@@ -46,12 +52,12 @@
           <input type="text" id="username_field" placeholder="Username" />
           <label for="password_field" id="password_label">Password: </label>
           <input type="password" id="password_field" placeholder="Password" />
-            <!-- <a href="update_user.html"><button class="buttontext">Update Info</button></a> -->
+          <!-- <a href="update_user.html"><button class="buttontext">Update Info</button></a> -->
           <!-- <input id="login-btn" type="submit" value="Login" /> -->
         </form>
         <div>
-          <a href=""><button class="buttontext">Login</button></a>
-        </div>        
+          <button class="buttontext" id="login-btn">Login</button></a>
+        </div>
       </div>
     </main>
     <script src="js/common.js"></script>

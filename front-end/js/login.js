@@ -1,10 +1,10 @@
 'use strict';
 (() => {
-  const loginForm = document.querySelector('#login form');
+  const loginForm = document.querySelector('#login-btn');
   if (!loginForm) {
     return;
   }
-  loginForm.addEventListener('submit', loginAction);
+  loginForm.addEventListener('click', loginAction);
 
   const API_URL =
     'http://nullpointerexception-env.eba-jvp359am.us-east-1.elasticbeanstalk.com';
