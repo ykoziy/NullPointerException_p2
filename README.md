@@ -18,7 +18,8 @@ NullPointerException is an online PC component store created using Spring Boot f
   - AWS Elastic Beanstalk (back-end deployment)
   - Amazon S3 (front-end deployment)
 - Unit testing with test reports
-- Logging
+- Aspect Logging
+- Docker
 
 ## Features
 
@@ -29,8 +30,34 @@ NullPointerException is an online PC component store created using Spring Boot f
 - User is able to see all product availabe
 - User can add/remove items to/from shopping cart
 - User is able to checkout with the items in the car, updating inventory
+- Passwords hashing
+
+## Limitations
+
+- No payment managment (front-end)
+- Shopping cart stored in SessionStorage
+- API not secure
+
+## Challanges
+
+- JPA data relationships, eslecially @ManyToMany
+- Front-end testing is time consuming, must use automation tools such as Selenium
 
 ## Getting Started
 
-- nothing to see here yet...
+1. Using git:
 
+- Start in a directory where to want to clone this repository
+- Execute `git clone https://github.com/ykoziy/NullPointerException_p2.git`
+- Switch into newly created directory `NullPointerException_p2`
+- Switch into `back-end`
+- In console do `mvn clean package -Ddb_user=username -Ddb_url=JDBCurl -Ddb_pass=password`
+- This will build and run the tests
+- Test report located in: `target\site\jacoco\index.html`
+- Executable jar located at: `target\back-end-0.0.1-SNAPSHOT.jar`
+
+2. Docker (contained enviroment to run the back end)
+
+- In the root directory project already has Dockerfile
+- Build docker image: `docker build . -t some_image_name`
+- Run docker image: `docker run -d -p 8080:8080 -e db_user="user name" -e db_pass="db password" -e db_url="db url" some_image_name`
