@@ -51,6 +51,7 @@
     const productContainer = document.createElement('div');
     productContainer.classList.add('product-card-container');
     productCard.appendChild(productContainer);
+    const isDisabled = product.inventory === 0 ? 'disabled' : '';
 
     const cardTemplate = `
          <div class="product-image">
@@ -61,7 +62,6 @@
             <b>${product.name}:</b>${product.description}</p>
          </div>
     `;
-
     const productMod = `
     <div class="product-mod-container">
        <div class="product-q-minus" data-id=${product.id}></div>
@@ -71,7 +71,7 @@
       `;
 
     const priceH = `<h2 class="styled">$${product.price}</h2>`;
-    const button = `<button class="add-cart-btn" data-id=${product.id}>Add to Cart</button>`;
+    const button = `<button class="add-cart-btn" data-id=${product.id} ${isDisabled}>Add to Cart</button>`;
 
     productContainer.innerHTML = cardTemplate;
     productCard.insertAdjacentHTML('beforeend', priceH);
@@ -80,6 +80,12 @@
     productCard
       .querySelector('.add-cart-btn')
       .addEventListener('click', (evt) => cartAction(evt, product));
+
+    if (isDisabled) {
+      console.log(productCard.querySelector('.product-mod-container'));
+      productCard.querySelector('.product-mod-container').style.visibility =
+        'hidden';
+    }
     return productCard;
   };
 

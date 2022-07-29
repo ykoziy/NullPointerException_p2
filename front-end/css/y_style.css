@@ -590,6 +590,11 @@ main > #items-container {
   font-weight: 400;
   background-color: #293240;
 }
+.add-cart-btn:disabled {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  background-color: #75777a;
+}
 
 .line {
   padding-left: 20px;
