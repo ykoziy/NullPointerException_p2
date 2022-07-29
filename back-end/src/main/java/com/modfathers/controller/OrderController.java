@@ -34,7 +34,7 @@ public class OrderController {
 		}
 	}
 	
-	@PostMapping("/add")
+	@PostMapping("/add/{user_id}/{card_id}")
 	public Order addOrder(@RequestHeader("user_id") int userId, @RequestHeader("card_id") int cardId, @RequestBody Order order) {
 		return orderServ.add(userId, cardId, order);
 	}
