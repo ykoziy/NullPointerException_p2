@@ -44,7 +44,9 @@
       ErrorModal.show(result.message);
       console.log(result);
     } else {
-      CookieManager.setCookie(result.id, result.userName);
+      delete result['registrationDate'];
+      delete result['password'];
+      CookieManager.setCookie(result);
       location.href = '/index.html';
     }
   };
