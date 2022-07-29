@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NullPointerException</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,900;1,400;1,500;1,600;1,700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/modal.css" />
+    <link rel="stylesheet" href="css/confirmation_style.css" />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <div id="nav-top">
+          <p>
+            Customer Service # 1 (800) 867-3663 | 1 (800) TOS-FONE |
+            <a class="logout"><u>Logout</u></a>
+          </p>
+        </div>
+        <div id="nav-bottom">
+          <div id="logo">
+            <img src="img/logo.svg" />
+          </div>
+
+          <ul>
+            <li><a href="/index.html">Home</a></li>
+            <li><a href="/products.html">Product</a></li>
+            <li><a href="/contact.html">Contact</a></li>
+            <li id="logreg">
+              <a id="active-nav" href="/login.html">My Account</a>
+            </li>
+            <li>
+              <a href="/cart.html"
+                ><div id="cart-img" count="2">
+                  <img class="cart-icon" src="img/cart-active.svg" /></div
+              ></a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+    <main>
+      <div id="cart">
+        <h1 class="styled">Order Confirmation</h1>
+        <div id="cart-container">
+          <div class="right-cart-container">
+            <div>
+                <img class="checkmark" src="img/check-mark.svg">
+            </div>
+            <!-- <div><img class="user" src="img/user.svg" /></div> -->
+            <div>Thank you! Your order has been received!</div>
+            <div>
+              <a href="update_user.html"
+                ><button class="buttontext">Continue Shopping</button></a>
+            </div>
+          </div>
+          <!-- <div class="left-cart-container">
+            <div class="cart-item-container">
+              <div class="cart-item">
+                <div class="cart-item-aside"> -->
+                  <!-- <div>
+                    <img class="checkmark" src="img/check-mark.svg">
+                  </div>   -->
+                  <!-- <div>Thank you! Your order has been received!</div>
+                  <div>
+                    <a href="update_user.html"
+                      ><button class="buttontext">Continue Shopping</button></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div> -->
+          <!-- <button class="buttontext">Continue Shopping</button> -->
+        </div>
+      </div>
+    </main>
+    <script src="js/common.js"></script>
+    <script src="js/login.js"></script>
+  </body>
+</html>
