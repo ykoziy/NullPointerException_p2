@@ -71,7 +71,10 @@
       `;
 
     const priceH = `<h2 class="styled">$${product.price}</h2>`;
-    const button = `<button class="add-cart-btn" data-id=${product.id} ${isDisabled}>Add to Cart</button>`;
+    const button = `<button class="add-cart-btn" data-id=${
+      product.id
+    } ${isDisabled}>
+    ${isDisabled ? 'Out of Stock' : 'Add to Cart'}</button>`;
 
     productContainer.innerHTML = cardTemplate;
     productCard.insertAdjacentHTML('beforeend', priceH);
