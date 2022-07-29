@@ -141,7 +141,7 @@ const STATES = [
         console.log(result);
         return;
       } else {
-        CookieManager.setCookie(result);
+        CookieManager.setCookie(res);
         location.href = '/index.html';
       }
     }
