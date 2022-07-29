@@ -50,22 +50,19 @@
           <div class="left-cart-container">
             <div class="cart-item-container">
               <div class="cart-item">
-                <div class="cart-item-aside">
-                  <div><b>Ship to:</b></div>
-                  <div>Jon Doe</div>
-                  <div>12345 Address Rd</div>
-                  <div>City, ST 79936</div>
-                </div>
+                <div class="cart-item-aside" id="address-info"></div>
               </div>
               <div class="cart-item">
                 <form>
                   <div id="register-form-container">
                     <div id="form_left">
-                      <label for="name_field" id="">Credit Card Number *</label>
+                      <label for="cc_field" id="">Credit Card Number *</label>
                       <input
                         type="text"
-                        id="name_field"
-                        placeholder="Enter your credit card number..."
+                        id="num_field"
+                        placeholder="0000 0000 0000 0000"
+                        value="0000 0000 0000 0000"
+                        pattern="[0-9]{4}\s[0-9]{4}\s[0-9]{4}\s[0-9]{3,4}"
                         required
                       />
 
@@ -75,25 +72,21 @@
                       <input
                         type="text"
                         id="expiration_field"
-                        placeholder="Enter the expiration date..."
+                        placeholder="1/2020"
+                        value="1/2020"
+                        pattern="^[1-9]{1,2}\/[0-9]{4}"
                         required
                       />
 
                       <label for="cvv_field" id="cvv_label">CVV *</label>
                       <input
-                        type="text"
+                        type="number"
                         id="cvv_field"
                         placeholder="Enter the CVV number..."
+                        value="123"
                         required
+                        pattern="[0-9]{3}"
                       />
-
-                      <!-- <label for="zip_field" id="zip_label">Zip *</label>
-                        <input
-                        type="text"
-                        id="zip_field"
-                        placeholder="Zip code"
-                        required
-                        /> -->
                     </div>
                   </div>
                 </form>
@@ -110,10 +103,10 @@
             <!-- <button class="buttontext">Continue Shopping</button> -->
           </div>
           <div class="right-cart-container">
-            <h3 class="cart-total">Subtotal</h3>
+            <h3 class="cart-total">Cart Total</h3>
             <div class="sutotal-container">
-              <h4 class="styled">Total</h4>
-              <h4 class="styled2">244.98</h4>
+              <h4 class="styled">Subtotalotal</h4>
+              <h4 class="styled2" id="sub-total">244.98</h4>
             </div>
             <div class="delivery-container">
               <h4 class="styled">Delivery</h4>
@@ -125,7 +118,7 @@
                 <option value="delivery_fast">Fast delivery (priceless)</option>
               </select>
             </div> -->
-            <button class="buttontext">Place Order</button>
+            <button class="buttontext" id="place-order-btn">Place Order</button>
             <h4 class="styled2">We accept:</h4>
             <div class="cc-container">
               <img class="visa" src="img/visa.svg" />
@@ -141,6 +134,7 @@
       </div>
     </main>
     <script src="js/common.js"></script>
+    <script src="js/checkout.js"></script>
     <script src="js/login.js"></script>
   </body>
 </html>
