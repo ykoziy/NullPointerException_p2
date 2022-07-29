@@ -1,14 +1,11 @@
 'use strict';
 class CookieManager {
-  static setCookie(id, userName) {
+  static setCookie(userObject) {
     const d = new Date();
     d.setTime(d.getTime() + 12 * 60 * 60 * 1000);
     const expires = d.toUTCString();
-    const cookieObj = {
-      id,
-      userName,
-    };
-
+    const cookieObj = { ...userObject };
+    console.log(userObject);
     document.cookie = `userinfo=${JSON.stringify(
       cookieObj,
     )}; expires=${expires}; path=/`;
@@ -185,8 +182,10 @@ class Cart {
 (() => {
   const loginRegistrationLink = document.getElementById('logreg');
   Cart.updateBadge();
+
   if (!CookieManager.getUserId()) {
     //cartIcon.hidden = true; ---debug mode
+    document.querySelector('.logout').innerHTML = '';
     loginRegistrationLink.innerHTML = '<a href="/login.html">Login</a>';
   } else {
     //cartIcon.hidden = false; ---debug mode
