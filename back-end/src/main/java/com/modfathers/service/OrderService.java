@@ -60,7 +60,11 @@ public class OrderService {
 					Product storedProd = prodRepo.findById(prod.getId()).orElse(null);
 					if (storedProd != null) {
 						int quantity = storedProd.getInventory();
-						storedProd.setInventory(--quantity);
+						if (quantity == 0) {
+							throw new DataNotFoundException("Product outs of stock, id: " + prod.getId());
+						} else {
+							storedProd.setInventory(--quantity);
+						}
 					} else {
 						throw new DataNotFoundException("Did not find product with id: " + prod.getId());
 					}
