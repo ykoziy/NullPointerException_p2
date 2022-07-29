@@ -179,4 +179,49 @@ public class PaymentServiceTest {
 		assertEquals(testPayment.getTimestamp(), testPayment2.getTimestamp());
 	}
 	
+	@Test
+	void shouldAddPaymentForCardOrder() {
+		testCard = new CreditCard();
+		testCard.setType("Visa");
+		testCard.setHolderFirstName("Bob");
+		testCard.setHolderLastName("Smith");
+		testCard.setExpMonth(9);
+		testCard.setExpYear(2022);
+		testCard.setNumber("4069282136832346");
+		testCard.setId(1);
+		
+		testOrder = new Order();
+		testOrder.setId(2);
+		
+		testPayment = new Payment(testCard, 1269.99, "pending", testOrder);
+		
+		when(orderRepo.findById(2)).thenReturn(Optional.of(testOrder));
+		when(cardRepo.findById(1)).thenReturn(Optional.of(testCard));
+		when(payRepo.save(testPayment)).thenReturn(testPayment);
+		
+		Payment pay = payServ.add(1, 2, testPayment);
+		
+		assertEquals(testCard, pay.getCard());
+		assertEquals(testCard.getNumber(), pay.getCard().getNumber());
+		assertEquals(testOrder.getId(), pay.getOrder().getId());
+		assertEquals("pending", pay.getState());		
+	}
+	
+	@Test
+	void shouldNotAddPaymentIfNoOrderFound() {
+		testCard = new CreditCard();
+		testCard.setType("Visa");
+		testCard.setHolderFirstName("Bob");
+		testCard.setHolderLastName("Smith");
+		testCard.setExpMonth(9);
+		testCard.setExpYear(2022);
+		testCard.setNumber("4069282136832346");
+		testCard.setId(1);
+		testPayment = new Payment();
+		when(cardRepo.findById(12)).thenReturn(Optional.of(testCard));
+		when(orderRepo.findById(1)).thenReturn(Optional.empty());
+		assertThrows(DataNotFoundException.class, () -> {
+			payServ.add(12, 1,testPayment);
+		});
+	}
 }
