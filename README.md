@@ -38,6 +38,14 @@ NullPointerException is an online PC component store created using Spring Boot f
 - Shopping cart stored in SessionStorage
 - API not secure
 
+## Feature Ideas
+
+- Email confirmation
+- Order information
+- Payment managment
+- Security
+- Make it responsive
+
 ## Challanges
 
 - JPA data relationships, eslecially @ManyToMany
