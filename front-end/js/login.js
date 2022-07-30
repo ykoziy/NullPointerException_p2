@@ -3,6 +3,7 @@
   const logoutLink = document.querySelector('.logout');
   logoutLink.addEventListener('click', logoutAction);
   function logoutAction() {
+    Cart.clear();
     CookieManager.delete();
     location.href = '/index.html';
   }
